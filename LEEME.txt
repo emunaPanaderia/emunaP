@@ -1,0 +1,26 @@
+PROYECTO BEKLAND - PAGINAS SEPARADAS
+====================================
+
+PAGINAS
+-------
+index.html      -> Inicio
+about.html      -> Nosotros
+product.html    -> Productos
+products.html   -> Productos (copia)
+contact.html    -> Contacto
+
+ESTILOS
+-------
+style.css           -> Diseno principal Bekland
+css/layout.css      -> Grid / layout (CSS puro, sin Bootstrap) - NO BORRAR
+assets/css/         -> Iconos, animaciones, responsive
+assets/js/          -> jQuery y plugins
+
+IMAGENES: assets/image/
+
+Abre index.html en el navegador.
+
+IMPORTANTE
+----------
+Si borras css/layout.css, el menu y las columnas (col-lg-*)
+se desalinean. Todas las paginas HTML lo necesitan.
