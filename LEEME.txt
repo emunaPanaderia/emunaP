@@ -1,26 +1,38 @@
-PROYECTO BEKLAND - PAGINAS SEPARADAS
-====================================
+LA EMUNA — PANADERIA Y PASTELERIA
+=================================
 
-PAGINAS
+Solo HTML, CSS y JavaScript. Sin librerias.
+
+Paginas
 -------
-index.html      -> Inicio
-about.html      -> Nosotros
-product.html    -> Productos
-products.html   -> Productos (copia)
-contact.html    -> Contacto
+index.html     Inicio, con las categorias en vertical
+about.html     Nosotros
+product.html   Productos
+contact.html   Contacto
 
-ESTILOS
--------
-style.css           -> Diseno principal Bekland
-css/layout.css      -> Grid / layout (CSS puro, sin Bootstrap) - NO BORRAR
-assets/css/         -> Iconos, animaciones, responsive
-assets/js/          -> jQuery y plugins
+Archivos
+--------
+style.css      Estilos de las 4 paginas
+script.js      Menu del celular, fotos del inicio y aviso del formulario
+img/           Solo las imagenes que se usan
 
-IMAGENES: assets/image/
+Imagenes
+--------
+logo.png          logo pequeno del menu
+favicon.ico       icono de la pestana
+slider-1.jpg      foto del inicio
+blog_1.jpg        foto del inicio y horneados
+blog_3.jpg        foto del inicio
+about-us.png      inicio y nosotros
+shop_1-1.png      cupcake
+shop_2-1.png      torta de chocolate
+shop_3-1.png      dona
+shop_5-1.png      pastel danes
+shop_6-1.png      torta de fresa
+shop_7-1.png      cupcake de la casa
+shop_8-1.png      hojaldre
 
+El pie tiene iconos de redes y un mapa de Google.
+El boton verde abre WhatsApp.
 Abre index.html en el navegador.
-
-IMPORTANTE
-----------
-Si borras css/layout.css, el menu y las columnas (col-lg-*)
-se desalinean. Todas las paginas HTML lo necesitan.
+El formulario de Pedido abre WhatsApp con el encargo. No envia correo.
