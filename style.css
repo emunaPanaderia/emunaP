@@ -124,7 +124,7 @@ p {
 
 /* Logo chico para que no tape la foto. */
 .logo img {
-    width: 92px;
+    width: 108px;
     height: auto;
 }
 
@@ -155,8 +155,8 @@ p {
 }
 
 .nav svg {
-    width: 16px;
-    height: 16px;
+    width: 22px;
+    height: 22px;
     flex: none;
     fill: none;
     stroke: currentColor;
@@ -170,17 +170,6 @@ p {
 }
 
 .nav a.activo {
-    background: var(--dorado);
-    color: var(--marron);
-}
-
-.nav a.pedido {
-    margin-left: 0.1rem;
-    border: 1px solid var(--dorado);
-    color: var(--dorado);
-}
-
-.nav a.pedido:hover {
     background: var(--dorado);
     color: var(--marron);
 }
@@ -201,16 +190,6 @@ p {
 .menu-claro .nav a.activo {
     background: var(--marron);
     color: var(--crema);
-}
-
-.menu-claro .nav a.pedido {
-    border-color: var(--dorado);
-    color: var(--marron);
-}
-
-.menu-claro .nav a.pedido:hover {
-    background: var(--dorado);
-    color: var(--marron);
 }
 
 .menu-claro .menu-boton span {
@@ -684,12 +663,6 @@ p {
     font-weight: 600;
 }
 
-.aviso {
-    margin: 1rem 0 0;
-    color: var(--marron);
-    font-weight: 600;
-}
-
 /* Tres fotos iguales, unidas por una línea quieta. */
 .hilo {
     position: relative;
@@ -897,7 +870,7 @@ html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
     }
 
     .logo img {
-        width: 76px;
+        width: 88px;
     }
 
     .menu-barra {
@@ -933,10 +906,6 @@ html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
         display: flex;
         justify-content: center;
         padding: 0.7rem 0.85rem;
-    }
-
-    .nav a.pedido {
-        margin: 0.2rem 0 0;
     }
 
     .dos-columnas,
@@ -980,5 +949,19 @@ html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
 
     .hilo img {
         height: 200px;
+    }
+}
+
+/* En pantalla grande el menú se acerca al borde, con un margen. */
+@media (min-width: 801px) {
+    .menu-barra {
+        position: static;
+    }
+
+    .nav {
+        position: absolute;
+        top: 50%;
+        right: 1.6rem;
+        transform: translateY(-50%);
     }
 }
