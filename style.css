@@ -235,35 +235,55 @@ p {
 }
 
 /* ---------- Portada ----------
-   Foto quieta. El título va nublado y los panes de atrás, apenas. */
+   Cuatro fotos del mismo tono que se turnan con un fundido.
+   El fondo va desenfocado; los panes de adelante, nítidos. */
 
 .hero {
     position: relative;
     display: flex;
     align-items: center;
-    height: min(78vh, 640px);
+    /* Ocupa toda la pantalla; svh evita el salto de la barra del navegador en celular. */
+    height: 100vh;
+    height: 100svh;
     min-height: 480px;
     overflow: hidden;
     background: var(--marron);
-    border-bottom-left-radius: 50% 72px;
-    border-bottom-right-radius: 50% 72px;
+    border-bottom: 6px solid #540d0e;
+    box-shadow: 0 10px 22px rgba(84, 13, 14, 0.5);
 }
 
-.hero-foto,
-.hero-niebla {
+.hero-fotos,
+.hero-foto {
     position: absolute;
     inset: 0;
+}
+
+.hero-foto {
+    opacity: 0;
+    transition: opacity 1.4s ease;
+}
+
+.hero-foto.activa {
+    opacity: 1;
+}
+
+.hero-foto::before,
+.hero-foto::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--foto);
     background-position: center 42%;
     background-size: cover;
 }
 
-/* La franja del título va nublada. Los panes de atrás, solo un poco. */
-.hero-niebla {
-    inset: -18px;
-    filter: blur(8px);
-    transform: scale(1.04);
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 30%, rgba(0, 0, 0, 0.42) 62%, rgba(0, 0, 0, 0.22) 78%, transparent 94%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 30%, rgba(0, 0, 0, 0.42) 62%, rgba(0, 0, 0, 0.22) 78%, transparent 94%);
+/* Copia desenfocada encima: tapa la pared y se apaga al llegar a los panes. */
+.hero-foto::after {
+    inset: -24px;
+    filter: blur(13px);
+    transform: scale(1.05);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 44%, rgba(0, 0, 0, 0.55) 62%, rgba(0, 0, 0, 0.2) 76%, transparent 90%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 44%, rgba(0, 0, 0, 0.55) 62%, rgba(0, 0, 0, 0.2) 76%, transparent 90%);
 }
 
 .hero::after {
@@ -282,13 +302,15 @@ p {
     color: var(--blanco);
 }
 
-
 .hero h1 {
     margin-bottom: 0.35rem;
     color: var(--dorado);
     font-style: italic;
     font-weight: 600;
     font-size: clamp(3.6rem, 8.5vw, 6.6rem);
+    /* Contorno blanco sólido. paint-order lo pinta por detrás para que no adelgace la letra. */
+    -webkit-text-stroke: 5px var(--blanco);
+    paint-order: stroke fill;
     animation: alumbrar 7s ease-in-out infinite;
 }
 
@@ -317,56 +339,265 @@ p {
 }
 
 /* ---------- Categorías ----------
-   Una debajo de la otra. La foto alterna de lado. */
+   Tarjetas en fila: foto arriba, texto y botón abajo. */
 
 .categorias {
     display: grid;
-    gap: 4.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
 }
 
+/* Al pasar el ratón sube con "translate" para no chocar con la animación de entrada. */
 .cat {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2.4rem;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
     min-width: 0;
+    overflow: hidden;
+    border: 1px solid rgba(74, 34, 24, 0.12);
+    border-radius: 18px;
+    background: var(--blanco);
+    box-shadow: var(--sombra);
+    transition: translate 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cat:hover {
+    translate: 0 -6px;
+    border-color: var(--dorado);
+    box-shadow: 0 20px 36px rgba(74, 34, 24, 0.14);
+}
+
+/* Hueco de la foto: siempre 4:3, sirva la imagen que sirva. */
+.cat img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: var(--crema);
+    transition: scale 0.5s ease;
+}
+
+.cat:hover img {
+    scale: 1.05;
 }
 
 .cat > div {
-    min-width: 0;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.4rem;
+    border-top: 1px solid rgba(74, 34, 24, 0.08);
+    background: var(--blanco);
 }
 
-.cat:nth-child(even) img {
-    order: 2;
+.cat h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.5rem;
 }
 
-.cat img {
+.cat p {
+    flex: 1;
+    margin: 0 0 1.2rem;
+}
+
+/* En celular, una por fila. */
+@media (max-width: 680px) {
+    .categorias {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---------- Carrusel de productos ----------
+   Fila que se desliza de lado; las flechas y el giro automático van en script.js. */
+
+.carrusel-marco {
+    position: relative;
+}
+
+/* Capa de las flechas encima del carrusel. El padding en % se mide sobre el ancho,
+   así que (ancho de tarjeta / 2) deja las flechas a media altura de la foto cuadrada. */
+.carrusel-flechas {
+    position: absolute;
+    top: 0.4rem;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    padding-top: calc((100% - 3 * 1.2rem) / 8);
+    pointer-events: none;
+}
+
+.carrusel-flecha {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    /* Asoma hasta el borde del margen de .contenedor (1rem), sin salirse de la pantalla. */
+    margin-inline: -1rem;
+    border: 1px solid rgba(74, 34, 24, 0.15);
+    border-radius: 50%;
+    background: var(--blanco);
+    color: var(--marron);
+    box-shadow: 0 8px 20px rgba(42, 16, 10, 0.18);
+    cursor: pointer;
+    pointer-events: auto;
+    transform: translateY(-50%);
+    transition: background 0.25s ease, color 0.25s ease;
+}
+
+.carrusel-flecha:hover {
+    background: var(--marron);
+    color: var(--crema);
+}
+
+.carrusel-flecha svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* El relleno de arriba y abajo deja ver la sombra de las tarjetas. */
+.carrusel {
+    display: flex;
+    gap: 1.2rem;
+    margin: 0 0 0.4rem;
+    padding: 0.4rem 0 1.4rem;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+
+.carrusel::-webkit-scrollbar {
+    display: none;
+}
+
+.carrusel-item {
+    flex: 0 0 calc((100% - 3 * 1.2rem) / 4);
+    overflow: hidden;
+    scroll-snap-align: start;
+    border: 1px solid rgba(74, 34, 24, 0.12);
+    border-radius: 18px;
+    background: var(--blanco);
+    box-shadow: var(--sombra);
+}
+
+.carrusel-item img {
     width: 100%;
-    height: 280px;
+    aspect-ratio: 1;
     object-fit: cover;
-    object-position: center;
-    border-radius: 8px;
-    background: var(--crema);
+    transition: scale 0.5s ease;
+}
+
+.carrusel-item:hover img {
+    scale: 1.05;
+}
+
+.carrusel-item h3 {
+    position: relative;
+    margin: 0;
+    padding: 1rem 1.2rem;
+    background: var(--blanco);
+    font-size: 1.15rem;
+    text-align: center;
+}
+
+/* El punto activo se alarga y se pone dorado. */
+.carrusel-puntos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.carrusel-punto {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(74, 34, 24, 0.2);
+    cursor: pointer;
+    transition: width 0.3s ease, background 0.3s ease;
+}
+
+.carrusel-punto:hover {
+    background: rgba(74, 34, 24, 0.45);
+}
+
+.carrusel-punto.activo {
+    width: 28px;
+    background: var(--dorado);
+}
+
+/* Se asoma un pedazo de la siguiente para invitar a deslizar. */
+@media (max-width: 900px) {
+    .carrusel-item {
+        flex-basis: calc((100% - 1.2rem) / 2.3);
+    }
+
+    .carrusel-flechas {
+        padding-top: calc((100% - 1.2rem) / 4.6);
+    }
+}
+
+/* En celular las flechas van por dentro para no salirse de la pantalla. */
+@media (max-width: 560px) {
+    .carrusel-item {
+        flex-basis: 72%;
+    }
+
+    .carrusel-flechas {
+        padding-top: 36%;
+    }
+
+    .carrusel-flecha {
+        width: 42px;
+        height: 42px;
+        margin-inline: 0.5rem;
+    }
 }
 
 /* ---------- Botones y secciones ---------- */
 
+/* Botón tipo píldora; la flecha avanza al pasar el ratón. */
 .boton {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
     margin-top: 0.4rem;
-    padding: 0.8rem 1.4rem;
+    padding: 0.85rem 1.6rem;
     border: 0;
-    border-radius: 6px;
+    border-radius: 999px;
     background: var(--dorado);
     color: var(--marron);
     font-family: inherit;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
+    transition: background 0.25s ease;
+}
+
+.boton::after {
+    content: "→";
+    transition: translate 0.25s ease;
 }
 
 .boton:hover {
     background: #efc15a;
+}
+
+.boton:hover::after {
+    translate: 4px 0;
+}
+
+/* El de WhatsApp ya lleva su icono. */
+.boton-wa::after {
+    content: none;
 }
 
 .boton-oscuro {
@@ -415,6 +646,24 @@ p {
     border-radius: 8px;
     background: var(--crema);
     box-shadow: var(--sombra);
+}
+
+/* Fotos reales del local. Si una es vertical, el alto máximo evita que se coma la sección. */
+.foto-local {
+    width: 100%;
+    max-height: 560px;
+    object-fit: cover;
+    object-position: center 60%;
+    border-radius: 18px;
+    box-shadow: 0 20px 36px rgba(74, 34, 24, 0.16);
+}
+
+/* Foto sin fondo con un círculo dorado suave detrás. */
+.panadero {
+    width: min(100%, 360px);
+    margin-inline: auto;
+    background: radial-gradient(circle at 50% 58%, var(--dorado-suave) 0 47%, transparent 47.5%);
+    filter: drop-shadow(0 14px 18px rgba(42, 16, 10, 0.25));
 }
 
 .tarjetas {
@@ -663,59 +912,6 @@ p {
     font-weight: 600;
 }
 
-/* Tres fotos iguales, unidas por una línea quieta. */
-.hilo {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.hilo::before {
-    content: "";
-    position: absolute;
-    top: 88px;
-    left: 8%;
-    right: 8%;
-    height: 2px;
-    background: var(--dorado);
-}
-
-.hilo li {
-    position: relative;
-    text-align: center;
-}
-
-.hilo img {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border: 4px solid var(--crema);
-    border-radius: 12px;
-}
-
-.hilo h3 {
-    margin: 0.8rem 0 0.3rem;
-}
-
-.hilo p {
-    margin: 0;
-    color: var(--texto-suave);
-    font-size: 0.95rem;
-}
-
-.hilo-cierre {
-    margin: 1.4rem 0 0;
-    color: var(--marron);
-    font-weight: 600;
-    text-align: center;
-}
-
 /* Al bajar, cada pieza entra distinto. Sin la clase del script, se ven normal. */
 html.con-scroll .entra:not(.visto) {
     opacity: 0;
@@ -766,7 +962,7 @@ html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
 
 @media (prefers-reduced-motion: reduce) {
     .hero h1 { animation: none; }
-    .hero-niebla { display: none; }
+    .hero-foto { transition: none; }
     html.con-scroll .entra:not(.visto) { opacity: 1; }
     html.con-scroll .visto { animation: none; }
 }
@@ -916,39 +1112,16 @@ html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
 
     .hero {
         height: auto;
-        min-height: 500px;
+        min-height: 100vh;
+        min-height: 100svh;
     }
 
     .hero h1 {
         font-size: clamp(2.8rem, 12vw, 4.2rem);
     }
 
-    .cat:nth-child(even) img {
-        order: 0;
-    }
-
     .hero-texto {
         padding-inline: 1rem;
-    }
-
-    .cat {
-        grid-template-columns: 1fr;
-    }
-
-    .cat img {
-        height: 220px;
-    }
-
-    .hilo {
-        grid-template-columns: 1fr;
-    }
-
-    .hilo::before {
-        display: none;
-    }
-
-    .hilo img {
-        height: 200px;
     }
 }
 

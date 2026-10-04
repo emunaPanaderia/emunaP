@@ -4,7 +4,9 @@
    2. Volteo de productos en el celular
    3. Pedido por WhatsApp
    4. Lista del tipo de pedido
-   5. Animaciones distintas al bajar */
+   5. Animaciones distintas al bajar
+   6. Fotos de la portada
+   7. Carrusel de productos */
 
 /* ---------- 1. Menú ---------- */
 
@@ -116,21 +118,11 @@ if (elige) {
 
 const piezas = [];
 
-document.querySelectorAll(".cat").forEach((bloque, i) => {
-    const pares = [
-        ["izq", "der"],
-        ["crece", "sube"],
-        ["gira", "baja"],
-        ["nace", "izq"]
-    ];
-    const par = pares[i % pares.length];
-    const foto = bloque.querySelector("img");
-    const texto = bloque.querySelector("div");
-    if (foto) piezas.push([foto, par[0]]);
-    if (texto) piezas.push([texto, par[1]]);
+document.querySelectorAll(".cat").forEach((tarjeta, i) => {
+    piezas.push([tarjeta, ["sube", "crece", "nace", "baja"][i % 4]]);
 });
 
-document.querySelectorAll(".foto-redonda").forEach((foto) => piezas.push([foto, "crece"]));
+document.querySelectorAll(".foto-redonda, .panadero, .foto-local").forEach((foto) => piezas.push([foto, "crece"]));
 document.querySelectorAll(".dos-columnas > div").forEach((bloque) => piezas.push([bloque, "der"]));
 
 document.querySelectorAll(".tarjeta").forEach((tarjeta, i) => {
@@ -141,14 +133,9 @@ document.querySelectorAll(".producto").forEach((producto, i) => {
     piezas.push([producto, ["baja", "crece", "izq", "der", "gira", "nace", "sube"][i % 7]]);
 });
 
-document.querySelectorAll(".hilo li").forEach((paso, i) => {
-    piezas.push([paso, ["izq", "crece", "der"][i % 3]]);
-});
-
-document.querySelectorAll(".hilo-cierre").forEach((cierre) => piezas.push([cierre, "nace"]));
 document.querySelectorAll(".formulario").forEach((formularioPedido) => piezas.push([formularioPedido, "izq"]));
 document.querySelectorAll(".datos").forEach((datos) => piezas.push([datos, "der"]));
-document.querySelectorAll(".mapa-grande").forEach((mapa) => piezas.push([mapa, "sube"]));
+document.querySelectorAll(".mapa-grande, .carrusel").forEach((bloque) => piezas.push([bloque, "sube"]));
 document.querySelectorAll(".titulo-seccion").forEach((titulo) => piezas.push([titulo, "baja"]));
 
 if (piezas.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -166,10 +153,108 @@ if (piezas.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matc
     piezas.forEach(([nodo, tipo]) => {
         nodo.classList.add("entra", "m-" + tipo);
         const grupo = nodo.parentElement;
-        if (grupo && (grupo.classList.contains("tarjetas") || grupo.classList.contains("rejilla") || grupo.classList.contains("hilo"))) {
+        if (grupo && (grupo.classList.contains("tarjetas") || grupo.classList.contains("rejilla") || grupo.classList.contains("categorias"))) {
             const orden = [...grupo.children].indexOf(nodo);
             nodo.style.animationDelay = (orden * 0.14) + "s";
         }
         observador.observe(nodo);
     });
+}
+
+/* ---------- 6. Portada ----------
+   Cada 5 segundos pasa a la foto siguiente. Si el usuario pidió menos
+   movimiento, se queda la primera. */
+
+const fotosPortada = document.querySelectorAll(".hero-foto");
+
+if (fotosPortada.length > 1 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    let actual = 0;
+    setInterval(() => {
+        fotosPortada[actual].classList.remove("activa");
+        actual = (actual + 1) % fotosPortada.length;
+        fotosPortada[actual].classList.add("activa");
+    }, 5000);
+}
+
+/* ---------- 7. Carrusel ----------
+   Las flechas avanzan una tarjeta. Al llegar al final vuelve al principio.
+   Gira solo cada 3 segundos, salvo con el ratón o el foco encima. */
+
+const carrusel = document.querySelector(".carrusel");
+
+if (carrusel) {
+    const pasoCarrusel = () => {
+        const tarjeta = carrusel.querySelector(".carrusel-item");
+        return tarjeta.offsetWidth + parseFloat(getComputedStyle(carrusel).columnGap);
+    };
+
+    const moverCarrusel = (direccion) => {
+        const alFinal = carrusel.scrollLeft + carrusel.clientWidth >= carrusel.scrollWidth - 4;
+        const alInicio = carrusel.scrollLeft <= 4;
+
+        if (direccion > 0 && alFinal) {
+            carrusel.scrollTo({ left: 0, behavior: "smooth" });
+        } else if (direccion < 0 && alInicio) {
+            carrusel.scrollTo({ left: carrusel.scrollWidth, behavior: "smooth" });
+        } else {
+            carrusel.scrollBy({ left: direccion * pasoCarrusel(), behavior: "smooth" });
+        }
+    };
+
+    document.querySelectorAll(".carrusel-flecha").forEach((flecha) => {
+        flecha.addEventListener("click", () => moverCarrusel(Number(flecha.dataset.dir)));
+    });
+
+    /* Un punto por cada posición a la que se puede llegar (cambia con el ancho de pantalla). */
+    const puntos = document.querySelector(".carrusel-puntos");
+
+    const marcarPunto = () => {
+        const actual = Math.round(carrusel.scrollLeft / pasoCarrusel());
+        puntos.querySelectorAll(".carrusel-punto").forEach((punto, i) => {
+            punto.classList.toggle("activo", i === actual);
+            if (i === actual) {
+                punto.setAttribute("aria-current", "true");
+            } else {
+                punto.removeAttribute("aria-current");
+            }
+        });
+    };
+
+    const crearPuntos = () => {
+        const cantidad = Math.round((carrusel.scrollWidth - carrusel.clientWidth) / pasoCarrusel()) + 1;
+        puntos.innerHTML = "";
+        for (let i = 0; i < cantidad; i++) {
+            const punto = document.createElement("button");
+            punto.type = "button";
+            punto.className = "carrusel-punto";
+            punto.setAttribute("aria-label", "Ir al producto " + (i + 1));
+            punto.addEventListener("click", () => {
+                carrusel.scrollTo({ left: i * pasoCarrusel(), behavior: "smooth" });
+            });
+            puntos.appendChild(punto);
+        }
+        marcarPunto();
+    };
+
+    if (puntos) {
+        crearPuntos();
+        carrusel.addEventListener("scroll", marcarPunto, { passive: true });
+        window.addEventListener("resize", crearPuntos);
+    }
+
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        let enPausa = false;
+        const zona = carrusel.closest(".contenedor");
+
+        zona.addEventListener("pointerenter", () => { enPausa = true; });
+        zona.addEventListener("pointerleave", () => { enPausa = false; });
+        zona.addEventListener("focusin", () => { enPausa = true; });
+        zona.addEventListener("focusout", () => { enPausa = false; });
+
+        setInterval(() => {
+            if (!enPausa && !document.hidden) {
+                moverCarrusel(1);
+            }
+        }, 3000);
+    }
 }

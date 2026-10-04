@@ -35,18 +35,22 @@
         </div>
     </header>
 
-    <!-- Una sola foto, quieta. El velo oscuro va en el CSS. -->
+    <!-- Las fotos cambian solas cada 5 segundos (script.js). El velo oscuro va en el CSS. -->
     <section class="hero" aria-label="Portada">
-        <div class="hero-foto" style="background-image: url('img/hero-mesa.png')"></div>
-        <div class="hero-niebla" style="background-image: url('img/hero-mesa.png')" aria-hidden="true"></div>
+        <div class="hero-fotos" aria-hidden="true">
+            <div class="hero-foto activa" style="--foto: url('img/hero-mesa.png')"></div>
+            <div class="hero-foto" style="--foto: url('img/hero-pan.jpg')"></div>
+            <div class="hero-foto" style="--foto: url('img/hero-cesta.jpg')"></div>
+            <div class="hero-foto" style="--foto: url('img/hero-dulces.jpg')"></div>
+        </div>
         <div class="contenedor hero-texto">
             <h1>Panadería Emuna</h1>
             <p class="hero-frase">Vendemos pan y felicidad</p>
-            <a class="boton" href="product.html">Ver productos</a>
+            <a class="boton" href="contact.html">Ver ubicaciones</a>
         </div>
     </section>
 
-    <!-- Cada categoría va una debajo de la otra, para que la página tenga más scroll. -->
+    <!-- Categorías en tarjetas. Para cambiar una foto, cambia el src de su img. -->
     <section class="seccion">
         <div class="contenedor categorias">
             <article class="cat">
@@ -58,7 +62,7 @@
                 </div>
             </article>
             <article class="cat">
-                <img src="img/cat-pasteleria.png" alt="Torta de fresa">
+                <img src="img/cat-donas.jpg" alt="Donas con chocolate y lluvia de colores">
                 <div>
                     <h2>Pastelería</h2>
                     <p>Tortas para compartir. Si es para una fecha, conviene encargarla con tiempo.</p>
@@ -66,21 +70,136 @@
                 </div>
             </article>
             <article class="cat">
-                <img src="img/blog_1.jpg" alt="Croissants recién horneados">
-                <div>
-                    <h2>Horneados</h2>
-                    <p>Hojaldre y piezas dulces que salen crujientes. Se acaban durante el día.</p>
-                    <a class="boton boton-oscuro" href="product.html">Ver horneados</a>
-                </div>
-            </article>
-            <article class="cat">
                 <img src="img/cat-dulces.png" alt="Cupcakes y donas">
                 <div>
-                    <h2>Dulces</h2>
+                    <h2>Antojitos</h2>
                     <p>Cupcakes y donas para llevar. El detalle de la decoración cambia según el día.</p>
-                    <a class="boton boton-oscuro" href="product.html">Ver dulces</a>
+                    <a class="boton boton-oscuro" href="product.html">Ver antojitos</a>
                 </div>
             </article>
+        </div>
+    </section>
+
+    <!-- Invitación a la tienda con la foto real de la fachada. -->
+    <section class="seccion seccion-crema">
+        <div class="contenedor dos-columnas">
+            <img class="foto-local" src="img/fachada.jpg" alt="Fachada de La Emuna con el toldo amarillo y la vitrina llena de pan">
+            <div>
+                <p class="etiqueta">Te esperamos</p>
+                <h2>Pasa por la panadería</h2>
+                <p>La vitrina se llena desde temprano con pan recién salido del horno, dulces y antojitos. Ven a escoger el tuyo mientras todavía está calentito.</p>
+                <p>Estamos en San Cristóbal, Táchira, de lunes a sábado de 7:00 a. m. a 7:00 p. m. Búscanos por el toldo amarillo.</p>
+                <a class="boton boton-oscuro" href="contact.html">Cómo llegar</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carrusel con lo que se vende en la tienda. Para cambiar una foto, cambia el src de su img. -->
+    <section class="seccion">
+        <div class="contenedor">
+            <div class="titulo-seccion">
+                <p class="etiqueta">Vitrina</p>
+                <h2>Lo que encuentras cada día</h2>
+            </div>
+            <div class="carrusel-marco">
+                <div class="carrusel-flechas">
+                    <button class="carrusel-flecha" type="button" data-dir="-1" aria-label="Producto anterior">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+                    </button>
+                    <button class="carrusel-flecha" type="button" data-dir="1" aria-label="Producto siguiente">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+                <ul class="carrusel" aria-label="Productos de La Emuna">
+                    <li class="carrusel-item">
+                        <img src="img/prod-campesino.jpg" alt="Pan campesino redondo con corteza enharinada" loading="lazy">
+                        <h3>Pan campesino</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-sandwich.jpg" alt="Pan de molde con rebanadas" loading="lazy">
+                        <h3>Pan sándwich</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-enrolladito.jpg" alt="Enrolladitos dorados" loading="lazy">
+                        <h3>Enrolladito</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-pegueta.jpg" alt="Peguetas de pan blanco unidas" loading="lazy">
+                        <h3>Pegueta</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-relleno.jpg" alt="Pan relleno de jamón y queso" loading="lazy">
+                        <h3>Pan relleno</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-maiz.jpg" alt="Pan de maíz rebanado" loading="lazy">
+                        <h3>Pan de maíz</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-avena.jpg" alt="Pan de avena con hojuelas" loading="lazy">
+                        <h3>Pan de avena</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-dulce.jpg" alt="Panes dulces con azúcar" loading="lazy">
+                        <h3>Pan dulce</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-bolitas-dulces.jpg" alt="Bolitas dulces con azúcar" loading="lazy">
+                        <h3>Bolitas dulces</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-bolitas-saladas.jpg" alt="Bolitas saladas con ajonjolí" loading="lazy">
+                        <h3>Bolitas saladas</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-espanol.jpg" alt="Pan español con azúcar" loading="lazy">
+                        <h3>Pan español</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-suspiros.jpg" alt="Suspiros blancos y rosados" loading="lazy">
+                        <h3>Suspiros</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-mini-torta.jpg" alt="Mini torta con chispas de colores" loading="lazy">
+                        <h3>Mini torta</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-dona-grande.jpg" alt="Dona grande de chocolate" loading="lazy">
+                        <h3>Dona grande</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-mini-dona.jpg" alt="Mini donas surtidas" loading="lazy">
+                        <h3>Mini dona</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-pasta-seca.jpg" alt="Pastas secas surtidas" loading="lazy">
+                        <h3>Pasta seca</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-galleta-bocadillo.jpg" alt="Galletas rellenas de bocadillo de guayaba" loading="lazy">
+                        <h3>Galleta bocadillo</h3>
+                    </li>
+                    <li class="carrusel-item">
+                        <img src="img/prod-bombom.jpg" alt="Bombones de chocolate" loading="lazy">
+                        <h3>Bombón de chocolate</h3>
+                    </li>
+                </ul>
+                <!-- Los puntos los crea script.js según cuántas posiciones tenga el carrusel. -->
+                <div class="carrusel-puntos" aria-label="Elegir producto"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- El trabajo detrás del mostrador. -->
+    <section class="seccion seccion-crema">
+        <div class="contenedor dos-columnas">
+            <div>
+                <p class="etiqueta">Orgullo tachirense</p>
+                <h2>Cada pieza pasa por nuestras manos</h2>
+                <p>Antes de que abra la tienda, la masa ya está sobre la mesa. Nuestros panaderos la estiran y le dan forma una por una, sin prisa, para que cada pan salga parejo y con buena miga.</p>
+                <p>Trabajamos con gorro, tapabocas y guantes, sobre mesas de acero que se limpian todos los días. Así cuidamos lo que llega a tu mesa.</p>
+            </div>
+            <img class="foto-local" src="img/mano_obra.jpg" alt="Panadero de La Emuna con gorro, tapabocas y guantes estirando la masa sobre la mesa">
         </div>
     </section>
 
@@ -118,92 +237,6 @@
                     <p>Escríbenos para tortas y encargos. Te confirmamos horario y disponibilidad.</p>
                 </article>
             </div>
-        </div>
-    </section>
-
-    <section class="seccion">
-        <div class="contenedor">
-            <div class="titulo-seccion">
-                <p class="etiqueta">Vitrina</p>
-                <h2>Recién horneado</h2>
-            </div>
-            <div class="rejilla">
-                <article class="producto">
-                    <div class="producto-giro">
-                        <div class="cara">
-                            <img src="img/shop_2-1.png" alt="">
-                            <h3>Torta de chocolate</h3>
-                        </div>
-                        <div class="dorso">
-                            <h3>Torta de chocolate</h3>
-                            <p>Para compartir. Conviene encargarla con un día de anticipación.</p>
-                        </div>
-                    </div>
-                </article>
-                <article class="producto">
-                    <div class="producto-giro">
-                        <div class="cara">
-                            <img src="img/shop_1-1.png" alt="">
-                            <h3>Cupcake de chocolate</h3>
-                        </div>
-                        <div class="dorso">
-                            <h3>Cupcake de chocolate</h3>
-                            <p>Bizcocho húmedo con cobertura de chocolate, horneado el mismo día.</p>
-                        </div>
-                    </div>
-                </article>
-                <article class="producto">
-                    <div class="producto-giro">
-                        <div class="cara">
-                            <img src="img/shop_6-1.png" alt="">
-                            <h3>Torta de fresa</h3>
-                        </div>
-                        <div class="dorso">
-                            <h3>Torta de fresa</h3>
-                            <p>Decorada con fresa. Sirve para un cumpleaños o el domingo en casa.</p>
-                        </div>
-                    </div>
-                </article>
-                <article class="producto">
-                    <div class="producto-giro">
-                        <div class="cara">
-                            <img src="img/shop_8-1.png" alt="">
-                            <h3>Hojaldre</h3>
-                        </div>
-                        <div class="dorso">
-                            <h3>Hojaldre</h3>
-                            <p>Masa hojaldrada, crujiente, recién salida del horno.</p>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            <a class="boton boton-oscuro" href="product.html">Ver toda la vitrina</a>
-        </div>
-    </section>
-
-    <section class="seccion seccion-crema">
-        <div class="contenedor">
-            <div class="titulo-seccion">
-                <h2>De la masa a la mesa</h2>
-            </div>
-            <ol class="hilo">
-                <li>
-                    <img src="img/ciclo-masa.png" alt="Masa en preparación">
-                    <h3>Madrugada</h3>
-                    <p>La masa se prepara temprano, con el tiempo que necesita para levar.</p>
-                </li>
-                <li>
-                    <img src="img/ciclo-horno.png" alt="Pan dentro del horno">
-                    <h3>El horno</h3>
-                    <p>Sale caliente cuando abre la panadería. Lo que no queda bien no se vende.</p>
-                </li>
-                <li>
-                    <img src="img/ciclo-vitrina.png" alt="Vitrina con pan y dulces">
-                    <h3>La vitrina</h3>
-                    <p>Pan, tortas y dulces del mismo día, hasta que se acaban.</p>
-                </li>
-            </ol>
-            <p class="hilo-cierre">Al día siguiente, otra vez desde la masa.</p>
         </div>
     </section>
 
