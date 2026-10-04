@@ -10,6 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <!-- La primera foto de la portada se descarga primero, para que no tarde en verse. -->
+    <link rel="preload" as="image" href="img/hero-mesa.webp" fetchpriority="high">
 </head>
 <body>
 
@@ -17,7 +19,7 @@
     <header class="menu">
         <div class="contenedor menu-barra">
             <a class="logo" href="index.html">
-                <img src="img/logo.png" alt="La Emuna">
+                <img src="img/logo.webp" alt="La Emuna">
             </a>
             <button class="menu-boton" type="button" aria-label="Abrir menú" aria-expanded="false">
                 <span></span>
@@ -38,10 +40,10 @@
     <!-- Las fotos cambian solas cada 5 segundos (script.js). El velo oscuro va en el CSS. -->
     <section class="hero" aria-label="Portada">
         <div class="hero-fotos" aria-hidden="true">
-            <div class="hero-foto activa" style="--foto: url('img/hero-mesa.png')"></div>
-            <div class="hero-foto" style="--foto: url('img/hero-pan.jpg')"></div>
-            <div class="hero-foto" style="--foto: url('img/hero-cesta.jpg')"></div>
-            <div class="hero-foto" style="--foto: url('img/hero-dulces.jpg')"></div>
+            <div class="hero-foto activa" style="--foto: url('img/hero-mesa.webp')"></div>
+            <div class="hero-foto" data-foto="img/hero-pan.webp"></div>
+            <div class="hero-foto" data-foto="img/hero-cesta.webp"></div>
+            <div class="hero-foto" data-foto="img/hero-dulces.webp"></div>
         </div>
         <div class="contenedor hero-texto">
             <h1>Panadería Emuna</h1>
@@ -149,7 +151,7 @@
     <!-- Invitación a la tienda con la foto real de la fachada. -->
     <section class="seccion seccion-crema">
         <div class="contenedor dos-columnas">
-            <img class="foto-local" src="img/fachada.jpg" alt="Fachada de La Emuna con el toldo amarillo y la vitrina llena de pan">
+            <img class="foto-local" src="img/fachada.webp" alt="Fachada de La Emuna con el toldo amarillo y la vitrina llena de pan">
             <div>
                 <p class="etiqueta">Te esperamos</p>
                 <h2>Visítanos</h2>
@@ -169,14 +171,14 @@
                 <p>Antes de que abra la tienda, la masa ya está sobre la mesa. Nuestros panaderos la estiran y le dan forma una por una, sin prisa, para que cada pan salga parejo y con buena miga.</p>
                 <p>Trabajamos con gorro, tapabocas y guantes, sobre mesas de acero que se limpian todos los días. Así cuidamos lo que llega a tu mesa.</p>
             </div>
-            <img class="foto-local" src="img/mano_obra.jpg" alt="Panadero de La Emuna con gorro, tapabocas y guantes estirando la masa sobre la mesa">
+            <img class="foto-local" src="img/mano_obra.webp" alt="Panadero de La Emuna con gorro, tapabocas y guantes estirando la masa sobre la mesa">
         </div>
     </section>
 
     <!-- Presentación corta. El texto largo está en Nosotros. -->
     <section class="seccion seccion-crema">
         <div class="contenedor dos-columnas">
-            <img class="foto-redonda" src="img/about-us.png" alt="Pan y pasteles de La Emuna">
+            <img class="foto-redonda" src="img/about-us.webp" alt="Pan y pasteles de La Emuna">
             <div>
                 <p class="etiqueta">La Emuna</p>
                 <h2>Panadería hecha con calma</h2>
@@ -190,7 +192,7 @@
     <footer class="pie">
         <div class="contenedor pie-grid">
             <div>
-                <img class="pie-logo" src="img/logo.png" alt="La Emuna">
+                <img class="pie-logo" src="img/logo.webp" alt="La Emuna">
                 <p>Pasa por la panadería en San Cristóbal, Táchira.</p>
                 <p>Lunes a sábado, 7:00 a. m. – 7:00 p. m. Te esperamos en la tienda.</p>
                 <!-- Los enlaces de Instagram y Facebook son de muestra. -->

@@ -104,16 +104,37 @@ if (piezas.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matc
 
 /* ---------- 4. Portada ----------
    Cada 5 segundos pasa a la foto siguiente. Si el usuario pidió menos
-   movimiento, se queda la primera. */
+   movimiento, se queda la primera.
+   Solo la primera foto se descarga al abrir la página. Las demás (data-foto)
+   se piden cuando la página ya cargó, y no se muestran hasta estar listas. */
 
 const fotosPortada = document.querySelectorAll(".hero-foto");
 
 if (fotosPortada.length > 1 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    window.addEventListener("load", () => {
+        fotosPortada.forEach((foto) => {
+            if (!foto.dataset.foto) {
+                return;
+            }
+            const imagen = new Image();
+            imagen.onload = () => {
+                foto.style.setProperty("--foto", "url('" + foto.dataset.foto + "')");
+                foto.dataset.lista = "si";
+            };
+            imagen.src = foto.dataset.foto;
+        });
+    });
+
     let actual = 0;
     setInterval(() => {
+        const siguiente = (actual + 1) % fotosPortada.length;
+        const lista = siguiente === 0 || fotosPortada[siguiente].dataset.lista === "si";
+        if (!lista) {
+            return;
+        }
         fotosPortada[actual].classList.remove("activa");
-        actual = (actual + 1) % fotosPortada.length;
-        fotosPortada[actual].classList.add("activa");
+        fotosPortada[siguiente].classList.add("activa");
+        actual = siguiente;
     }, 5000);
 }
 
