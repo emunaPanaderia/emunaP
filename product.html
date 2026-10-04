@@ -39,91 +39,327 @@
         <div class="contenedor">
             <p class="etiqueta">Vitrina</p>
             <h1>Productos</h1>
-            <div class="rejilla">
-            <article class="producto">
-                <div class="producto-giro">
-                    <div class="cara">
-                        <img src="img/shop_1-1.png" alt="">
-                        <h2>Cupcake de chocolate</h2>
-                    </div>
-                    <div class="dorso">
-                        <h2>Cupcake de chocolate</h2>
-                        <p>Bizcocho húmedo con cobertura de chocolate, horneado el mismo día.</p>
+            <!-- Todos los productos, por categoría. Para agregar uno, copia un <article class="ficha">.
+                 Al pasar el ratón o tocar la ficha, se voltea y muestra la descripción. -->
+            <div id="lista">
+                <div class="grupo" id="panaderia">
+                    <h2>Panadería</h2>
+                    <p class="bajada">Pan del día, sale temprano del horno.</p>
+                    <div class="fichas">
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-campesino.jpg" alt="Pan campesino" loading="lazy">
+                                    <h3>Pan campesino</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Pan campesino</h3>
+                                    <p>Redondo, de corteza firme y miga suave.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-sandwich.jpg" alt="Pan sándwich" loading="lazy">
+                                    <h3>Pan sándwich</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Pan sándwich</h3>
+                                    <p>Pan de molde para rebanar en casa.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-pegueta.jpg" alt="Pegueta" loading="lazy">
+                                    <h3>Pegueta</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Pegueta</h3>
+                                    <p>Panes blancos unidos, para compartir.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-enrolladito.jpg" alt="Enrolladito" loading="lazy">
+                                    <h3>Enrolladito</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Enrolladito</h3>
+                                    <p>Pequeño y dorado, ideal para el desayuno.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-relleno.jpg" alt="Pan relleno" loading="lazy">
+                                    <h3>Pan relleno</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Pan relleno</h3>
+                                    <p>Con jamón y queso por dentro.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-maiz.jpg" alt="Pan de maíz" loading="lazy">
+                                    <h3>Pan de maíz</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Pan de maíz</h3>
+                                    <p>Suave y con sabor a maíz.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-avena.jpg" alt="Pan de avena" loading="lazy">
+                                    <h3>Pan de avena</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Pan de avena</h3>
+                                    <p>Con hojuelas de avena por encima.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-dulce.jpg" alt="Pan dulce" loading="lazy">
+                                    <h3>Pan dulce</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Pan dulce</h3>
+                                    <p>Tierno y con azúcar por encima.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-espanol.jpg" alt="Pan español" loading="lazy">
+                                    <h3>Pan español</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Pan español</h3>
+                                    <p>Un clásico de la panadería tachirense.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-bolitas-saladas.jpg" alt="Bolitas saladas" loading="lazy">
+                                    <h3>Bolitas saladas</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Bolitas saladas</h3>
+                                    <p>Con ajonjolí, para picar.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img class="sin-fondo" src="img/shop_8-1.png" alt="Hojaldre" loading="lazy">
+                                    <h3>Hojaldre</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Hojaldre</h3>
+                                    <p>Masa hojaldrada y crujiente.</p>
+                                </div>
+                            </div>
+                        </article>
                     </div>
                 </div>
-            </article>
-            <article class="producto">
-                <div class="producto-giro">
-                    <div class="cara">
-                        <img src="img/shop_2-1.png" alt="">
-                        <h2>Torta de chocolate</h2>
-                    </div>
-                    <div class="dorso">
-                        <h2>Torta de chocolate</h2>
-                        <p>Para compartir. Conviene encargarla con un día de anticipación.</p>
-                    </div>
-                </div>
-            </article>
-            <article class="producto">
-                <div class="producto-giro">
-                    <div class="cara">
-                        <img src="img/shop_3-1.png" alt="">
-                        <h2>Dona de chocolate</h2>
-                    </div>
-                    <div class="dorso">
-                        <h2>Dona de chocolate</h2>
-                        <p>Dona suave, cubierta de chocolate. Se vende mientras haya del día.</p>
-                    </div>
-                </div>
-            </article>
-            <article class="producto">
-                <div class="producto-giro">
-                    <div class="cara">
-                        <img src="img/shop_5-1.png" alt="">
-                        <h2>Pastel danés</h2>
-                    </div>
-                    <div class="dorso">
-                        <h2>Pastel danés</h2>
-                        <p>Hojaldre dulce, crujiente por fuera y tierno por dentro.</p>
-                    </div>
-                </div>
-            </article>
-            <article class="producto">
-                <div class="producto-giro">
-                    <div class="cara">
-                        <img src="img/shop_6-1.png" alt="">
-                        <h2>Torta de fresa</h2>
-                    </div>
-                    <div class="dorso">
-                        <h2>Torta de fresa</h2>
-                        <p>Decorada con fresa. Sirve para un cumpleaños o el domingo en casa.</p>
-                    </div>
-                </div>
-            </article>
-            <article class="producto">
-                <div class="producto-giro">
-                    <div class="cara">
-                        <img src="img/shop_7-1.png" alt="">
-                        <h2>Cupcake de la casa</h2>
-                    </div>
-                    <div class="dorso">
-                        <h2>Cupcake de la casa</h2>
-                        <p>Cupcake decorado. El detalle de arriba cambia según el día.</p>
-                    </div>
-                </div>
-            </article>
-            <article class="producto">
-                <div class="producto-giro">
-                    <div class="cara">
-                        <img src="img/shop_8-1.png" alt="">
-                        <h2>Hojaldre</h2>
-                    </div>
-                    <div class="dorso">
-                        <h2>Hojaldre</h2>
-                        <p>Masa hojaldrada, crujiente, recién salida del horno.</p>
+                <div class="grupo" id="pasteleria">
+                    <h2>Pastelería</h2>
+                    <p class="bajada">Tortas y postres listos en vitrina.</p>
+                    <div class="fichas">
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img class="sin-fondo" src="img/shop_2-1.png" alt="Torta de chocolate" loading="lazy">
+                                    <h3>Torta de chocolate</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Torta de chocolate</h3>
+                                    <p>Para compartir en familia.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img class="sin-fondo" src="img/shop_6-1.png" alt="Torta de fresa" loading="lazy">
+                                    <h3>Torta de fresa</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Torta de fresa</h3>
+                                    <p>Decorada con fresa.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-mini-torta.jpg" alt="Mini torta" loading="lazy">
+                                    <h3>Mini torta</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Mini torta</h3>
+                                    <p>Porción individual con chispas de colores.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img class="sin-fondo" src="img/shop_5-1.png" alt="Pastel danés" loading="lazy">
+                                    <h3>Pastel danés</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Pastel danés</h3>
+                                    <p>Hojaldre dulce, crujiente por fuera.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-suspiros.jpg" alt="Suspiros" loading="lazy">
+                                    <h3>Suspiros</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Suspiros</h3>
+                                    <p>Merengue blanco y rosado.</p>
+                                </div>
+                            </div>
+                        </article>
                     </div>
                 </div>
-            </article>
+                <div class="grupo" id="antojitos">
+                    <h2>Antojitos</h2>
+                    <p class="bajada">Algo dulce para llevar.</p>
+                    <div class="fichas">
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img class="sin-fondo" src="img/shop_1-1.png" alt="Cupcake de chocolate" loading="lazy">
+                                    <h3>Cupcake de chocolate</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Cupcake de chocolate</h3>
+                                    <p>Bizcocho húmedo con cobertura de chocolate.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img class="sin-fondo" src="img/shop_7-1.png" alt="Cupcake de la casa" loading="lazy">
+                                    <h3>Cupcake de la casa</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Cupcake de la casa</h3>
+                                    <p>La decoración cambia según el día.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img class="sin-fondo" src="img/shop_3-1.png" alt="Dona de chocolate" loading="lazy">
+                                    <h3>Dona de chocolate</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Dona de chocolate</h3>
+                                    <p>Suave y cubierta de chocolate.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-dona-grande.jpg" alt="Dona grande" loading="lazy">
+                                    <h3>Dona grande</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Dona grande</h3>
+                                    <p>Para el antojo grande.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-mini-dona.jpg" alt="Mini dona" loading="lazy">
+                                    <h3>Mini dona</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Mini dona</h3>
+                                    <p>Surtidas, para probar varias.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-bolitas-dulces.jpg" alt="Bolitas dulces" loading="lazy">
+                                    <h3>Bolitas dulces</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Bolitas dulces</h3>
+                                    <p>Pasadas por azúcar.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-pasta-seca.jpg" alt="Pasta seca" loading="lazy">
+                                    <h3>Pasta seca</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Pasta seca</h3>
+                                    <p>Galletas surtidas para el café.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-galleta-bocadillo.jpg" alt="Galleta bocadillo" loading="lazy">
+                                    <h3>Galleta bocadillo</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Galleta bocadillo</h3>
+                                    <p>Rellena de bocadillo de guayaba.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="ficha" tabindex="0">
+                            <div class="ficha-giro">
+                                <div class="ficha-cara">
+                                    <img src="img/prod-bombom.jpg" alt="Bombón de chocolate" loading="lazy">
+                                    <h3>Bombón de chocolate</h3>
+                                </div>
+                                <div class="ficha-dorso">
+                                    <h3>Bombón de chocolate</h3>
+                                    <p>Bocado de chocolate.</p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -131,9 +367,9 @@
     <footer class="pie">
         <div class="contenedor pie-grid">
             <div>
-                <p class="pie-marca">La Emuna</p>
+                <img class="pie-logo" src="img/logo.png" alt="La Emuna">
                 <p>Pasa por la panadería en San Cristóbal, Táchira.</p>
-                <p>Lunes a sábado, 7:00 a. m. – 7:00 p. m. Si quieres torta, avísanos con tiempo.</p>
+                <p>Lunes a sábado, 7:00 a. m. – 7:00 p. m. Te esperamos en la tienda.</p>
                 <div class="redes">
                     <a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zm5 4.2A4.8 4.8 0 1 0 16.8 12 4.8 4.8 0 0 0 12 7.2zm6.3-.8a1.1 1.1 0 1 0 1.1 1.1 1.1 1.1 0 0 0-1.1-1.1zM12 9.1A2.9 2.9 0 1 1 9.1 12 2.9 2.9 0 0 1 12 9.1z"/></svg>
@@ -150,7 +386,7 @@
         </div>
     </footer>
 
-    <a class="whatsapp" href="https://wa.me/582760000000?text=Hola%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+    <a class="whatsapp" href="https://wa.me/582760000000?text=Hola%2C%20tengo%20una%20pregunta" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.7 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3zm5.1 12.8c-.2.6-1.2 1.1-1.6 1.1s-1.3.2-3.4-.7-3.6-3.3-3.7-3.5-.8-1.1-.8-2.1.5-1.5.7-1.7.5-.3.7-.3h.5c.2 0 .4 0 .6.5s.7 1.7.8 1.8.1.3 0 .5-.2.4-.3.5-.2.2-.1.5.5 1 1.2 1.6a5.4 5.4 0 0 0 2.3 1c.3 0 .4 0 .6-.2s.7-.8.9-1.1.4-.2.6-.1 1.5.7 1.8.8.4.2.5.3.1.6-.1 1.2z"/></svg>
     </a>
 

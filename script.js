@@ -1,12 +1,11 @@
 /* La Emuna — script.js
    JavaScript puro, sin librerías.
    1. Menú en celular
-   2. Volteo de productos en el celular
-   3. Pedido por WhatsApp
-   4. Lista del tipo de pedido
-   5. Animaciones distintas al bajar
-   6. Fotos de la portada
-   7. Carrusel de productos */
+   2. Mensaje por WhatsApp
+   3. Animaciones distintas al bajar
+   4. Fotos de la portada
+   5. Carrusel de productos
+   6. Fichas de productos que se voltean */
 
 /* ---------- 1. Menú ---------- */
 
@@ -32,18 +31,8 @@ if (botonMenu && nav) {
     });
 }
 
-/* ---------- 2. Productos ----------
-   En el celular no hay mouse: un toque voltea la tarjeta. */
-document.querySelectorAll(".producto").forEach((tarjeta) => {
-    tarjeta.addEventListener("click", () => {
-        if (window.matchMedia("(hover: none)").matches) {
-            tarjeta.classList.toggle("volteado");
-        }
-    });
-});
-
-/* ---------- 3. Pedido ----------
-   No hay servidor: el formulario abre WhatsApp con el texto del encargo. */
+/* ---------- 2. Mensaje ----------
+   No hay servidor: el formulario abre WhatsApp con el texto escrito. */
 
 const formulario = document.querySelector("#formulario");
 
@@ -52,68 +41,17 @@ if (formulario) {
         evento.preventDefault();
         const datos = new FormData(formulario);
         const texto = [
-            "Hola, quiero encargar con tiempo.",
+            "Hola, les escribo desde la página.",
             "Nombre: " + datos.get("nombre"),
             "Teléfono: " + datos.get("telefono"),
-            "Pedido: " + datos.get("tipo"),
-            "Fecha: " + datos.get("fecha"),
-            "Detalle: " + datos.get("detalle")
+            "Mensaje: " + datos.get("detalle")
         ].join("\n");
         const enlace = "https://wa.me/582760000000?text=" + encodeURIComponent(texto);
         window.open(enlace, "_blank", "noopener");
     });
 }
 
-/* ---------- 4. Tipo de pedido ----------
-   Abre una lista en crema y dorado, sin el menú azul del navegador. */
-
-const elige = document.querySelector(".elige");
-
-if (elige) {
-    const boton = elige.querySelector(".elige-boton");
-    const lista = elige.querySelector(".elige-lista");
-    const valor = elige.querySelector(".elige-valor");
-    const campo = elige.querySelector("input[name='tipo']");
-
-    const cerrar = () => {
-        lista.hidden = true;
-        elige.classList.remove("abierto");
-        boton.setAttribute("aria-expanded", "false");
-    };
-
-    boton.addEventListener("click", () => {
-        const abrir = lista.hidden;
-        lista.hidden = !abrir;
-        elige.classList.toggle("abierto", abrir);
-        boton.setAttribute("aria-expanded", abrir ? "true" : "false");
-    });
-
-    lista.querySelectorAll("[role='option']").forEach((opcion) => {
-        opcion.addEventListener("click", () => {
-            campo.value = opcion.dataset.valor;
-            valor.textContent = opcion.textContent;
-            lista.querySelectorAll("[role='option']").forEach((otra) => {
-                otra.removeAttribute("aria-selected");
-            });
-            opcion.setAttribute("aria-selected", "true");
-            cerrar();
-        });
-    });
-
-    document.addEventListener("click", (evento) => {
-        if (!elige.contains(evento.target)) {
-            cerrar();
-        }
-    });
-
-    document.addEventListener("keydown", (evento) => {
-        if (evento.key === "Escape") {
-            cerrar();
-        }
-    });
-}
-
-/* ---------- 5. Al bajar ----------
+/* ---------- 3. Al bajar ----------
    Cada bloque usa un movimiento distinto. Si no hay JS, el contenido se ve igual. */
 
 const piezas = [];
@@ -129,9 +67,7 @@ document.querySelectorAll(".tarjeta").forEach((tarjeta, i) => {
     piezas.push([tarjeta, ["sube", "gira", "nace"][i % 3]]);
 });
 
-document.querySelectorAll(".producto").forEach((producto, i) => {
-    piezas.push([producto, ["baja", "crece", "izq", "der", "gira", "nace", "sube"][i % 7]]);
-});
+document.querySelectorAll(".ficha").forEach((ficha) => piezas.push([ficha, "sube"]));
 
 document.querySelectorAll(".formulario").forEach((formularioPedido) => piezas.push([formularioPedido, "izq"]));
 document.querySelectorAll(".datos").forEach((datos) => piezas.push([datos, "der"]));
@@ -153,15 +89,20 @@ if (piezas.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matc
     piezas.forEach(([nodo, tipo]) => {
         nodo.classList.add("entra", "m-" + tipo);
         const grupo = nodo.parentElement;
-        if (grupo && (grupo.classList.contains("tarjetas") || grupo.classList.contains("rejilla") || grupo.classList.contains("categorias"))) {
+        if (grupo && (grupo.classList.contains("tarjetas") || grupo.classList.contains("categorias"))) {
             const orden = [...grupo.children].indexOf(nodo);
             nodo.style.animationDelay = (orden * 0.14) + "s";
+        }
+        /* En la cuadrícula de productos el retraso se repite por fila, para no esperar tanto. */
+        if (grupo && grupo.classList.contains("fichas")) {
+            const orden = [...grupo.children].indexOf(nodo);
+            nodo.style.animationDelay = ((orden % 4) * 0.1) + "s";
         }
         observador.observe(nodo);
     });
 }
 
-/* ---------- 6. Portada ----------
+/* ---------- 4. Portada ----------
    Cada 5 segundos pasa a la foto siguiente. Si el usuario pidió menos
    movimiento, se queda la primera. */
 
@@ -176,7 +117,7 @@ if (fotosPortada.length > 1 && !window.matchMedia("(prefers-reduced-motion: redu
     }, 5000);
 }
 
-/* ---------- 7. Carrusel ----------
+/* ---------- 5. Carrusel ----------
    Las flechas avanzan una tarjeta. Al llegar al final vuelve al principio.
    Gira solo cada 3 segundos, salvo con el ratón o el foco encima. */
 
@@ -188,16 +129,53 @@ if (carrusel) {
         return tarjeta.offsetWidth + parseFloat(getComputedStyle(carrusel).columnGap);
     };
 
+    /* Desliza hasta "destino" en 450 ms: arranca suave, acelera y frena suave.
+       Mientras se mueve se apaga el imán (scroll-snap) para que no tironee,
+       y las tarjetas se encogen un poco (clase "moviendo" en el CSS). */
+    const sinMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let animacion = 0;
+
+    const irA = (destino) => {
+        const maximo = carrusel.scrollWidth - carrusel.clientWidth;
+        destino = Math.max(0, Math.min(destino, maximo));
+
+        if (sinMovimiento) {
+            carrusel.scrollLeft = destino;
+            return;
+        }
+
+        cancelAnimationFrame(animacion);
+        const desde = carrusel.scrollLeft;
+        const duracion = 450;
+        const inicio = performance.now();
+        carrusel.style.scrollSnapType = "none";
+        carrusel.classList.add("moviendo");
+
+        const paso = (ahora) => {
+            const t = Math.min((ahora - inicio) / duracion, 1);
+            const curva = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            carrusel.scrollLeft = desde + (destino - desde) * curva;
+            if (t < 1) {
+                animacion = requestAnimationFrame(paso);
+            } else {
+                carrusel.style.scrollSnapType = "";
+                carrusel.classList.remove("moviendo");
+            }
+        };
+        animacion = requestAnimationFrame(paso);
+    };
+
     const moverCarrusel = (direccion) => {
         const alFinal = carrusel.scrollLeft + carrusel.clientWidth >= carrusel.scrollWidth - 4;
         const alInicio = carrusel.scrollLeft <= 4;
 
         if (direccion > 0 && alFinal) {
-            carrusel.scrollTo({ left: 0, behavior: "smooth" });
+            irA(0);
         } else if (direccion < 0 && alInicio) {
-            carrusel.scrollTo({ left: carrusel.scrollWidth, behavior: "smooth" });
+            irA(carrusel.scrollWidth);
         } else {
-            carrusel.scrollBy({ left: direccion * pasoCarrusel(), behavior: "smooth" });
+            const actual = Math.round(carrusel.scrollLeft / pasoCarrusel());
+            irA((actual + direccion) * pasoCarrusel());
         }
     };
 
@@ -229,7 +207,7 @@ if (carrusel) {
             punto.className = "carrusel-punto";
             punto.setAttribute("aria-label", "Ir al producto " + (i + 1));
             punto.addEventListener("click", () => {
-                carrusel.scrollTo({ left: i * pasoCarrusel(), behavior: "smooth" });
+                irA(i * pasoCarrusel());
             });
             puntos.appendChild(punto);
         }
@@ -242,7 +220,7 @@ if (carrusel) {
         window.addEventListener("resize", crearPuntos);
     }
 
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (!sinMovimiento) {
         let enPausa = false;
         const zona = carrusel.closest(".contenedor");
 
@@ -258,3 +236,15 @@ if (carrusel) {
         }, 3000);
     }
 }
+
+/* ---------- 6. Fichas ----------
+   Con el ratón se voltean solas (CSS). Con un clic, un toque o Enter quedan volteadas. */
+document.querySelectorAll(".ficha").forEach((ficha) => {
+    ficha.addEventListener("click", () => ficha.classList.toggle("volteada"));
+    ficha.addEventListener("keydown", (evento) => {
+        if (evento.key === "Enter" || evento.key === " ") {
+            evento.preventDefault();
+            ficha.classList.toggle("volteada");
+        }
+    });
+});

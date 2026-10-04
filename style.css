@@ -484,6 +484,13 @@ p {
     border-radius: 18px;
     background: var(--blanco);
     box-shadow: var(--sombra);
+    transition: scale 0.25s ease, opacity 0.25s ease;
+}
+
+/* Mientras el carrusel se desliza, las tarjetas se achican un poco y vuelven. */
+.carrusel.moviendo .carrusel-item {
+    scale: 0.96;
+    opacity: 0.85;
 }
 
 .carrusel-item img {
@@ -704,8 +711,22 @@ p {
     font-size: clamp(2.4rem, 4vw, 3.4rem);
 }
 
-#pedido {
+#contacto {
     scroll-margin-top: 0.5rem;
+}
+
+/* Nosotros: el panadero llega hasta el pie de página, así no se ve cortado. */
+.nosotros {
+    padding-bottom: 0;
+}
+
+.nosotros .panadero {
+    align-self: end;
+    filter: none;
+}
+
+.nosotros .dos-columnas > div {
+    padding-bottom: 4.5rem;
 }
 
 /* ---------- Productos ----------
@@ -727,76 +748,111 @@ p {
     font-size: 1.08rem;
 }
 
-.rejilla {
+/* Un grupo por categoría: título y cuadrícula de fichas. */
+.grupo {
+    scroll-margin-top: 6rem;
+    margin-bottom: 3.4rem;
+}
+
+.grupo:first-child {
+    margin-top: 2rem;
+}
+
+.grupo h2 {
+    margin-bottom: 0.3rem;
+}
+
+.grupo .bajada {
+    margin-bottom: 1.4rem;
+}
+
+.fichas {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2.2rem 1.4rem;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 1.4rem;
 }
 
-/* La tarjeta gira al pasar el mouse y muestra el texto de atrás. */
-.producto {
-    height: 280px;
-    perspective: 900px;
+/* Ficha que se voltea: adelante la foto, atrás la descripción.
+   Las dos caras ocupan la misma celda, así la ficha toma el alto de la cara. */
+.ficha {
+    perspective: 1000px;
+    cursor: pointer;
 }
 
-.producto-giro {
-    position: relative;
-    height: 100%;
+.ficha:focus-visible {
+    outline: 3px solid var(--dorado);
+    outline-offset: 4px;
+    border-radius: 16px;
+}
+
+.ficha-giro {
+    display: grid;
     transform-style: preserve-3d;
     transition: transform 0.6s ease;
 }
 
-.producto:hover .producto-giro,
-.producto.volteado .producto-giro {
+.ficha.volteada .ficha-giro {
     transform: rotateY(180deg);
 }
 
-.cara,
-.dorso {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    border-radius: 12px;
-    backface-visibility: hidden;
-    text-align: center;
+/* Solo con ratón: en el celular pasar el dedo no debe voltearla. */
+@media (hover: hover) {
+    .ficha:hover .ficha-giro {
+        transform: rotateY(180deg);
+    }
 }
 
-.cara {
+.ficha-cara,
+.ficha-dorso {
+    grid-area: 1 / 1;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: var(--sombra);
+    backface-visibility: hidden;
+}
+
+.ficha-cara {
     background: var(--blanco);
 }
 
-.dorso {
+.ficha-dorso {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.4rem;
     background: var(--marron);
-    color: var(--crema);
+    text-align: center;
     transform: rotateY(180deg);
 }
 
-.cara img {
-    width: 150px;
-    height: 120px;
-    margin: 0 auto 0.6rem;
+.ficha img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+/* Las fotos con fondo transparente se ven completas sobre crema. */
+.ficha img.sin-fondo {
+    padding: 1rem;
     object-fit: contain;
+    background: var(--crema);
 }
 
-.producto h2,
-.producto h3 {
-    font-size: 1.25rem;
+.ficha h3 {
+    margin: 0.9rem 1rem 1rem;
+    font-size: 1.15rem;
+}
+
+.ficha-dorso h3 {
+    margin: 0 0 0.6rem;
+    color: var(--dorado);
+    font-size: 1.3rem;
+}
+
+.ficha-dorso p {
     margin: 0;
-}
-
-.dorso h2,
-.dorso h3,
-.dorso p {
     color: var(--crema);
-}
-
-.dorso p {
-    margin: 0.6rem 0 0;
-    font-size: 0.98rem;
+    font-size: 1rem;
 }
 
 /* ---------- Contacto ---------- */
@@ -832,84 +888,6 @@ p {
 .formulario textarea:focus {
     outline: 2px solid var(--dorado);
     border-color: transparent;
-}
-
-/* Lista propia del pedido. El menú azul del navegador no se puede pintar. */
-.elige {
-    position: relative;
-    margin-bottom: 1rem;
-}
-
-.elige-boton {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0.8rem 0.9rem;
-    border: 1px solid rgba(74, 34, 24, 0.16);
-    border-radius: 6px;
-    background: var(--blanco);
-    color: var(--texto);
-    font-family: inherit;
-    font-size: 1rem;
-    text-align: left;
-    cursor: pointer;
-}
-
-.elige-boton svg {
-    width: 16px;
-    height: 16px;
-    fill: none;
-    stroke: var(--marron);
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.elige.abierto {
-    z-index: 40;
-}
-
-.elige.abierto .elige-boton,
-.elige-boton:focus-visible {
-    outline: 2px solid var(--dorado);
-    border-color: transparent;
-}
-
-.elige.abierto .elige-boton svg {
-    transform: rotate(180deg);
-}
-
-.elige-lista {
-    position: absolute;
-    z-index: 4;
-    top: calc(100% + 6px);
-    left: 0;
-    right: 0;
-    margin: 0;
-    padding: 0.4rem;
-    list-style: none;
-    background: var(--blanco);
-    border: 1px solid rgba(74, 34, 24, 0.1);
-    border-radius: 12px;
-    box-shadow: var(--sombra);
-}
-
-.elige-lista li {
-    padding: 0.7rem 0.85rem;
-    border-radius: 8px;
-    color: var(--texto);
-    cursor: pointer;
-}
-
-.elige-lista li:hover {
-    background: var(--crema-oscura);
-}
-
-.elige-lista li[aria-selected="true"] {
-    background: var(--dorado);
-    color: var(--marron);
-    font-weight: 600;
 }
 
 /* Al bajar, cada pieza entra distinto. Sin la clase del script, se ven normal. */
@@ -984,11 +962,11 @@ html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
     align-items: center;
 }
 
-.pie-marca {
-    margin: 0 0 0.35rem;
-    font-family: var(--titulo);
-    font-size: 1.7rem;
-    color: var(--blanco);
+/* Logo en el pie de página. */
+.pie-logo {
+    display: block;
+    width: 170px;
+    margin: 0 0 0.8rem;
 }
 
 .pie p {
@@ -1022,6 +1000,23 @@ html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
     fill: currentColor;
 }
 
+/* En Contactos el fondo es claro: iconos en marrón. */
+.redes-contacto {
+    margin: 0.4rem 0 2.2rem;
+}
+
+.redes-contacto a {
+    width: 46px;
+    height: 46px;
+    border-color: rgba(84, 13, 14, 0.25);
+    color: var(--marron);
+}
+
+.redes-contacto svg {
+    width: 20px;
+    height: 20px;
+}
+
 .mapa {
     width: 100%;
     height: 220px;
@@ -1031,6 +1026,7 @@ html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
 
 .mapa-grande {
     height: 340px;
+    margin-top: 0.6rem;
 }
 
 /* Botón redondo, fijo, en todas las páginas. */
@@ -1108,6 +1104,15 @@ html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
     .tarjetas,
     .pie-grid {
         grid-template-columns: 1fr;
+    }
+
+    /* En el celular el panadero va de último, pegado al pie. */
+    .nosotros .panadero {
+        order: 2;
+    }
+
+    .nosotros .dos-columnas > div {
+        padding-bottom: 0;
     }
 
     .hero {
