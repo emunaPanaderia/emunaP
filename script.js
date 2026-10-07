@@ -46,7 +46,7 @@ if (formulario) {
             "Teléfono: " + datos.get("telefono"),
             "Mensaje: " + datos.get("detalle")
         ].join("\n");
-        const enlace = "https://wa.me/582760000000?text=" + encodeURIComponent(texto);
+        const enlace = "https://wa.me/+573001059833?text=" + encodeURIComponent(texto);
         window.open(enlace, "_blank", "noopener");
     });
 }
