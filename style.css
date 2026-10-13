@@ -9,7 +9,7 @@
    Si no hay internet, el navegador usa Georgia y Segoe UI. */
 
 :root {
-    --crema: #fbf6ee;
+    --crema: #fcf4d3;
     --crema-oscura: #f4e4cc;
     --marron: #4a2218;
     --texto: #3f2c26;
@@ -307,7 +307,7 @@ p {
     color: var(--dorado);
     font-style: italic;
     font-weight: 600;
-    font-size: clamp(3.6rem, 8.5vw, 6.6rem);
+    font-size: clamp(2.6rem, 8.5vw, 5.6rem);
     /* Contorno blanco sólido. paint-order lo pinta por detrás para que no adelgace la letra. */
     -webkit-text-stroke: 5px var(--blanco);
     paint-order: stroke fill;
@@ -629,7 +629,8 @@ p {
 }
 
 .seccion {
-    padding: 4.5rem 0;
+    padding: 4.5rem 0;    
+    background: var(--crema);
 }
 
 .seccion-crema {
