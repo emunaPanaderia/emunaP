@@ -35,20 +35,24 @@
         </div>
     </header>
     <!-- Las fotos cambian solas cada 5 segundos (script.js). El velo oscuro va en el CSS. -->
-    <section class="hero" aria-label="Portada">
-        <div class="hero-fotos" aria-hidden="true">
-            <div class="hero-foto activa" style="--foto: url('img/hero-mesa.webp')"></div>
-            <div class="hero-foto" data-foto="img/hero-pan.webp"></div>
-            <div class="hero-foto" data-foto="img/hero-cesta.webp"></div>
-            <div class="hero-foto" data-foto="img/hero-dulces.webp"></div>
-        </div>
-        <div class="contenedor hero-texto">
-            <h1>Panadería La Emuna</h1>
-            <p class="hero-frase">Vendemos pan y felicidad</p>
-            <a class="boton" href="contact.html">Ver ubicaciones</a>
-        </div>
-    </section>
+    
+<section class="hero" aria-label="Portada">
+    <!-- Video de fondo -->
+    <video autoplay muted loop playsinline preload="auto" class="bg-video">
+        <source src="img/portada-fondo.mp4" type="video/mp4">
+        Tu navegador no soporta video en segundo plano.
+    </video>
 
+    <!-- Overlay oscuro -->
+    <div class="video-overlay"></div>
+
+    <!-- Contenido centrado -->
+    <div class="hero-content">
+        <h1>Panadería La Emuna</h1>
+        <p class="hero-frase">Vendemos pan y felicidad</p>
+        <a href="contact.html" class="boton">Ver ubicaciones</a>
+    </div>
+</section>
     <!-- Carrusel con lo que se vende en la tienda. Para cambiar una foto, cambia el src de su img. -->
     <section class="seccion">
         <div class="contenedor">
@@ -144,6 +148,34 @@
             </div>
         </div>
     </section>
+    <!-- El trabajo detrás del mostrador. -->
+    <section class="seccion">
+        <div class="contenedor dos-columnas">
+            <div>
+                <p class="etiqueta">Orgullo tachirense</p>
+                <h2>El arte de hacer pan con dedicación</h2>
+                <p>Moldeamos cada masa a mano, asegurando el sabor y la calidad en cada preparación.</p> 
+                    <p>Nos mueve el deseo de llevar a tu mesa un pan fresco, suave y hecho con el cariño que mereces.</p>
+                </div>
+            <img class="foto-local" src="img/mano_obra.webp" alt="Panadero de La Emuna con gorro, tapabocas y guantes estirando la masa sobre la mesa">
+        </div>
+    </section>
+
+    <!-- Presentación corta. El texto largo está en Nosotros. -->
+    <section class="seccion seccion-crema">
+        <div class="contenedor dos-columnas">
+            <img class="foto-redonda" src="img/enrolladitos.png" alt="Pan y pasteles de La Emuna">
+            <div>
+                <p class="etiqueta">Los preferidos</p>
+                <h2>Enrrolladitos</h2>
+                <p>Nuestros irresistibles enrolladitos rellenos de arequipe, bocadillo o queso<br>
+                <b>Calentitos, suaves y perfectos para cualquier antojo.</b>
+                ¡Pide los tuyos! <br></p>
+
+                <a class="boton boton-oscuro" href="product.html">Ver productos</a>
+            </div>
+        </div>
+    </section>
 
     <!-- Invitación a la tienda con la foto real de la fachada. -->
     <section class="seccion seccion-crema">
@@ -152,36 +184,9 @@
             <div>
                 <p class="etiqueta">Te esperamos</p>
                 <h2>Visítanos</h2>
-                <p>Pan recién horneado, dulces y antojitos desde temprano.</p>
-                <p>Estamos en San Cristóbal, Táchira, de lunes a sábado de 8:00 a. m. a 6:30 p. m. Búscanos por el toldo amarillo.</p>
+                <p>Encuentra el mejor pan recién horneado, frescos y los mejores antojitos.</p>
+                <p>Nos encontramos en San Cristóbal, Táchira, listos para atenderte de lunes a sábado de 8:00 a.m. - 6:30 p.m.</p>
                 <a class="boton boton-oscuro" href="contact.html">Cómo llegar</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- El trabajo detrás del mostrador. -->
-    <section class="seccion">
-        <div class="contenedor dos-columnas">
-            <div>
-                <p class="etiqueta">Orgullo tachirense</p>
-                <h2>Cada pieza pasa por nuestras manos</h2>
-                <p>Antes de que abra la tienda, la masa ya está sobre la mesa. Nuestros panaderos la estiran y le dan forma una por una, sin prisa, para que cada pan salga parejo y con buena miga.</p>
-                <p>Trabajamos con gorro, tapabocas y guantes, sobre mesas de acero que se limpian todos los días. Así cuidamos lo que llega a tu mesa.</p>
-            </div>
-            <img class="foto-local" src="img/mano_obra.webp" alt="Panadero de La Emuna con gorro, tapabocas y guantes estirando la masa sobre la mesa">
-        </div>
-    </section>
-
-    <!-- Presentación corta. El texto largo está en Nosotros. -->
-    <section class="seccion seccion-crema">
-        <div class="contenedor dos-columnas">
-            <img class="foto-redonda" src="img/about-us.webp" alt="Pan y pasteles de La Emuna">
-            <div>
-                <p class="etiqueta">La Emuna</p>
-                <h2>Panadería hecha con calma</h2>
-                <p>Somos una panadería y pastelería del Táchira. Abrimos temprano para que el pan salga del horno cuando empieza el día.</p>
-                <p>No buscamos complicar la receta: buen trigo, mantequilla y el tiempo que la masa necesita.</p>
-                <a class="boton boton-oscuro" href="about.html">Nuestra historia</a>
             </div>
         </div>
     </section>
@@ -190,16 +195,18 @@
         <div class="contenedor pie-grid">
             <div>
                 <img class="pie-logo" src="img/logo.webp" alt="La Emuna">
-                <p>Pasa por la panadería en San Cristóbal, Táchira.</p>
-                <p>Lunes a sábado, 7:00 a. m. – 7:00 p. m. Te esperamos en la tienda.</p>
+                <p>¡Vísitanos! <br> Nuestros horarios son:</p>
+                <p>Lunes a sábado, 8:00 a. m. – 6:30 p. m.  </p>
                 <!-- Los enlaces de Instagram y Facebook son de muestra. -->
                 <div class="redes">
                     <a href="https://www.instagram.com/panaderialaemuna/" target="_blank" rel="noopener" aria-label="Instagram">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zm5 4.2A4.8 4.8 0 1 0 16.8 12 4.8 4.8 0 0 0 12 7.2zm6.3-.8a1.1 1.1 0 1 0 1.1 1.1 1.1 1.1 0 0 0-1.1-1.1zM12 9.1A2.9 2.9 0 1 1 9.1 12 2.9 2.9 0 0 1 12 9.1z"/></svg>
                     </a>
-                    <a href="https://facebook.com/" target="_blank" rel="noopener" aria-label="Facebook">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h2.6l.4-3H13v-2c0-.6.4-1 1-1z"/></svg>
-                    </a>
+                  <a href="mailto:panaderialaemuna@gmail.com" target="_blank" rel="noopener" aria-label="Gmail">
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+</a>
                     <a href="https://wa.me/+573001059833" target="_blank" rel="noopener" aria-label="WhatsApp">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.7 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3zm5.1 12.8c-.2.6-1.2 1.1-1.6 1.1s-1.3.2-3.4-.7-3.6-3.3-3.7-3.5-.8-1.1-.8-2.1.5-1.5.7-1.7.5-.3.7-.3h.5c.2 0 .4 0 .6.5s.7 1.7.8 1.8.1.3 0 .5-.2.4-.3.5-.2.2-.1.5.5 1 1.2 1.6a5.4 5.4 0 0 0 2.3 1c.3 0 .4 0 .6-.2s.7-.8.9-1.1.4-.2.6-.1 1.5.7 1.8.8.4.2.5.3.1.6-.1 1.2z"/></svg>
                     </a>

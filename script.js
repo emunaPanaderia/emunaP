@@ -269,3 +269,13 @@ document.querySelectorAll(".ficha").forEach((ficha) => {
         }
     });
 });
+
+/* ---------- Video de Portada (Velocidad) ---------- */
+
+const videoPortada = document.querySelector(".bg-video");
+
+if (videoPortada) {
+    // 0.75 ralentiza ligeramente el video (cámara lenta suave). 
+    // 1.0 es la velocidad normal.
+    videoPortada.playbackRate = 0.75; 
+}
