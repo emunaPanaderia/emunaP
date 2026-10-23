@@ -535,7 +535,38 @@ p {
 .foto-redonda {
     width: 100%;
     border-radius: 8px;
+}
 
+/* Foto de enrolladitos: más grande, con círculo dorado detrás. */
+.foto-enrolladitos {
+    display: grid;
+    place-items: center;
+    width: min(100%, 640px);
+    margin-inline: auto;
+    aspect-ratio: 1;
+    background:
+        radial-gradient(circle at 50% 55%, rgba(224, 168, 46, 0.45) 0 42%, transparent 43%),
+        radial-gradient(circle at 50% 55%, rgba(243, 212, 138, 0.55) 0 58%, transparent 59%);
+    filter: drop-shadow(0 18px 28px rgba(74, 34, 24, 0.22));
+}
+
+.foto-enrolladitos img {
+    width: 96%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* En escritorio la foto ocupa un poco más que el texto. */
+@media (min-width: 801px) {
+    .seccion-enrolladitos .dos-columnas {
+        grid-template-columns: 1.25fr 1fr;
+        gap: 2rem;
+    }
+
+    .foto-enrolladitos {
+        width: 100%;
+        max-width: 680px;
+    }
 }
 
 /* Fotos reales del local. Si una es vertical, el alto máximo evita que se coma la sección. */
@@ -752,7 +783,7 @@ p {
 .pie {
     padding: 2.2rem 0;
     background: #3a1a14;
-    color: var(--crema);
+    color: #ffffff;
     font-size: 0.98rem;
 }
 
@@ -772,6 +803,7 @@ p {
 
 .pie p {
     margin: 0 0 0.35rem;
+    color: #ffffff;
 }
 
 .redes {
@@ -785,9 +817,9 @@ p {
     place-items: center;
     width: 40px;
     height: 40px;
-    border: 1px solid rgba(251, 246, 238, 0.45);
+    border: 1px solid #ffffff;
     border-radius: 50%;
-    color: var(--crema);
+    color: #ffffff;
 }
 
 .redes a:hover {
@@ -913,6 +945,25 @@ p {
 
     .nosotros .dos-columnas > div {
         padding-bottom: 0;
+    }
+
+    /* Menos espacio entre la foto de enrolladitos y el título. */
+    .seccion-enrolladitos {
+        padding-top: 2.2rem;
+        padding-bottom: 2.2rem;
+    }
+
+    .seccion-enrolladitos .dos-columnas {
+        gap: 0.6rem;
+    }
+
+    .foto-enrolladitos {
+        width: min(100%, 380px);
+        margin-bottom: 0;
+    }
+
+    .seccion-enrolladitos .etiqueta {
+        margin-top: 0.2rem;
     }
 
     .hero {
