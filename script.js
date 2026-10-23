@@ -279,7 +279,7 @@ if (esEscritorio()) {
     }
 
     /* Fotos e imágenes de las secciones */
-    agregarPiezas(".foto-redonda, .panadero, .foto-local, .foto-enrolladitos", "crece");
+    agregarPiezas(".panadero, .foto-local, .foto-enrolladitos", "crece");
     agregarPiezas("main img, .seccion img, .vitrina img, .pagina img", "crece");
 
     /* Textos y títulos de cada sección */

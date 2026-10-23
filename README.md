@@ -1,114 +1,110 @@
 # La Emuna — sitio web de la panadería
 
-Este proyecto es la página web de **Panadería La Emuna**, en San Cristóbal, Táchira.
-Está hecho solo con **HTML, CSS y JavaScript**, sin frameworks ni librerías.
-
-La idea es que sea fácil de entender y de cambiar: si quieres editar un texto, una foto o un color, casi siempre basta con abrir el archivo y buscarlo.
+Página web de **Panadería La Emuna** (San Cristóbal, Táchira).
+Hecha solo con **HTML, CSS y JavaScript**, sin frameworks ni librerías.
 
 ---
 
 ## Cómo abrir el sitio
 
-1. Abre la carpeta `emuna` en el explorador de archivos.
+1. Abre la carpeta `emuna`.
 2. Da doble clic a `index.html` (o ábrelo con Live Server en VS Code / Cursor).
-3. Para ver cambios de CSS o JS, a veces conviene recargar con **Ctrl + F5**.
+3. Si no ves un cambio reciente, recarga con **Ctrl + F5**.
 
 ---
 
-## Archivos importantes
+## Archivos del proyecto
 
 | Archivo | Para qué sirve |
 |---------|----------------|
-| `index.html` | Página de inicio (portada, carrusel, fachada, etc.) |
-| `about.html` | Página Nosotros (misión y visión) |
-| `product.html` | Página de productos (fichas que se voltean) |
-| `contact.html` | Página de contacto (formulario + mapa) |
-| `style.css` | Todos los estilos (colores, tamaños, diseño) |
-| `script.js` | Lo que se mueve o reacciona al clic |
-| `img/` | Fotos, logo y el video de la portada |
+| `index.html` | Inicio: portada, carrusel, enrolladitos, pan de jamón, fachada |
+| `about.html` | Nosotros (misión y visión) |
+| `product.html` | Productos (fichas que se voltean) |
+| `contact.html` | Contacto (formulario + mapa) |
+| `style.css` | Estilos de las 4 páginas |
+| `script.js` | Menú, carrusel, fichas, WhatsApp, video, animaciones |
+| `img/` | Fotos WebP, logo, favicon y video de portada |
 
-Las 4 páginas comparten el mismo menú, el mismo pie y el mismo `style.css` / `script.js`.
+No hay Python ni carpetas temporales: solo lo que usa el sitio.
 
 ---
 
-## Cómo está armado el sitio
+## Qué hay en `img/`
+
+- **Video:** `portada-fondo.mp4` (fondo de la portada).
+- **Logo / ícono:** `logo.webp`, `favicon.ico`.
+- **Inicio:** `mano_obra.webp`, `enrolladitos.webp`, `PandeJamon.webp`, `fachada.webp`.
+- **Nosotros:** `model1.webp`.
+- **Carrusel y productos:** panes, enrollados, rellenos, bolitas, peguetas, brownie, galletas, turrón (todos en `.webp`).
+
+---
+
+## Cómo está armado
 
 ### Menú
-- Arriba está el logo y los enlaces: Inicio, Nosotros, Productos, Contacto.
-- En el celular aparece un botón de 3 rayas. Al tocarlo, `script.js` abre o cierra el menú.
+Logo + enlaces (Inicio, Nosotros, Productos, Contacto). En celular hay un botón de 3 rayas.
 
 ### Inicio (`index.html`)
-1. **Portada** con un video de fondo (`img/portada-fondo.mp4`), un velo oscuro y el título.
-2. **Carrusel** con fotos de productos. Se mueve con flechas, con puntos o solo cada 3 segundos.
-3. Secciones con texto e imágenes (mano de obra, enrolladitos, fachada).
-4. **Pie de página** con logo, horario, redes y un mapa pequeño.
+1. Portada con video, título y frase.
+2. Carrusel de productos (flechas, puntos o auto cada 3 s).
+3. Sección de mano de obra.
+4. **Enrolladitos** y **pan de jamón**: foto sin fondo sobre dos círculos dorados (sin animación).
+5. Fachada del local + pie con mapa.
 
 ### Nosotros (`about.html`)
-- Foto del panadero a un lado.
-- Texto de la panadería, misión y visión al otro.
+Foto del panadero, texto, misión y visión.
 
 ### Productos (`product.html`)
-- Productos agrupados (Panadería, Antojitos, etc.).
-- Cada producto es una **ficha**: al hacer clic se voltea y muestra una descripción corta.
+Fichas por grupo. Al hacer clic se voltean y muestran una descripción.
 
 ### Contacto (`contact.html`)
-- Íconos de Instagram, correo y WhatsApp.
-- Formulario (nombre, teléfono, mensaje). Al enviar, se abre WhatsApp con ese texto.
-- Datos de la tienda y un mapa grande de Google Maps.
+Redes, formulario (abre WhatsApp) y mapa de Google.
 
 ---
 
-## Qué hace `script.js` (en simple)
+## Qué hace `script.js`
 
-1. **Menú:** abre / cierra en el celular.
-2. **Formulario:** junta lo que escribiste y abre WhatsApp.
-3. **Carrusel:** mueve las fotos, marca los puntos y avanza solo.
-4. **Fichas:** al hacer clic, pone o quita la clase `volteada`.
-5. **Video:** baja un poco la velocidad de la portada para que se vea más suave.
-
-No usa librerías. Son cosas básicas: `querySelector`, `addEventListener`, `classList` y `scrollTo`.
+1. Abre / cierra el menú en celular.
+2. Envía el formulario a WhatsApp.
+3. Mueve el carrusel.
+4. Voltea las fichas de productos.
+5. Baja un poco la velocidad del video de portada.
+6. Animaciones al hacer scroll (solo en escritorio, desde 801px).
 
 ---
 
-## Cómo cambiar cosas comunes
+## Cambios frecuentes
 
-### Cambiar un texto
-Abre el `.html` correspondiente, busca el párrafo o título y edítalo.
+### Texto
+Edita el `.html` correspondiente.
 
-### Cambiar una foto
-1. Pon la imagen nueva en la carpeta `img/`.
-2. En el HTML, cambia el `src` de esa `<img>` (por ejemplo `src="img/mi-foto.jpg"`).
+### Foto
+1. Pon el archivo nuevo en `img/` (mejor `.webp`).
+2. Cambia el `src` de la `<img>` en el HTML.
 
-### Agregar un producto
-En `product.html`, copia un bloque `<article class="ficha">...</article>` y cambia:
-- la foto (`src`)
-- el nombre (`h3`)
-- la descripción del dorso (`p`)
+### Producto nuevo
+En `product.html`, copia un `<article class="ficha">...</article>` y cambia foto, nombre y descripción.
 
-### Cambiar colores
-En `style.css`, arriba están las variables en `:root` (`--marron`, `--dorado`, `--crema`, etc.).
-Si cambias ahí, se actualiza en casi todo el sitio.
+### Colores
+En `style.css`, variables de `:root` (`--marron`, `--dorado`, `--crema`, etc.).
 
-### Cambiar el número de WhatsApp
-Busca `wa.me/` en los HTML y en `script.js`, y pon el número nuevo (con código de país, sin espacios).
+### WhatsApp
+Busca `wa.me/` en los HTML y en `script.js`.
 
 ---
 
 ## Colores y tipografía
 
-- **Marrón / burdeos:** textos fuertes y pie de página.
-- **Dorado:** detalles y títulos destacados.
-- **Crema:** fondos suaves.
-- **Fraunces:** títulos (si no hay internet, usa Georgia).
-- **Outfit:** textos normales (si no hay internet, usa Segoe UI).
+- **Marrón:** textos fuertes y pie.
+- **Dorado:** detalles y círculos de fondo.
+- **Crema:** fondos de sección.
+- **Fraunces:** títulos · **Outfit:** textos (con respaldo del sistema si no hay internet).
 
 ---
 
 ## Notas
 
-- El sitio es estático: no hay base de datos ni servidor propio.
-- El formulario no guarda datos en ningún lado; solo abre WhatsApp.
-- Algunas imágenes están en `.webp` para que pesen menos y carguen más rápido.
-- El video de la portada debe estar en `img/portada-fondo.mp4`.
-
-Si algo no se ve bien después de editar, revisa que no falte una etiqueta en el HTML (por ejemplo un `</p>` o un `</div>`).
+- Sitio estático: sin base de datos ni servidor propio.
+- El formulario no guarda datos; solo abre WhatsApp.
+- Las imágenes van en `.webp` para pesar menos.
+- El video de portada debe llamarse exactamente `img/portada-fondo.mp4`.

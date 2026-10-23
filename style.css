@@ -538,12 +538,7 @@ p {
     align-items: center;
 }
 
-.foto-redonda {
-    width: 100%;
-    border-radius: 8px;
-}
-
-/* Foto de enrolladitos con corazones animados detrás. */
+/* Foto de producto con dos círculos dorados detrás (sin animación). */
 .foto-enrolladitos {
     position: relative;
     display: grid;
@@ -556,151 +551,49 @@ p {
 
 .foto-enrolladitos img {
     position: relative;
-    z-index: 2;
-    width: 96%;
+    z-index: 3;
+    width: 92%;
     height: auto;
     object-fit: contain;
     filter: drop-shadow(0 14px 18px rgba(42, 16, 10, 0.25));
 }
 
-/* Corazón hecho con CSS (dos círculos + un cuadrado). */
-.corazon {
-    position: absolute;
-    z-index: 1;
-    width: 56px;
-    height: 56px;
-    background: var(--dorado);
-    opacity: 0.55;
-    transform: rotate(-45deg);
-    animation: corazon-flotar 5.5s ease-in-out infinite;
+/* Menos aire entre enrolladitos y pan de jamón. */
+.seccion-enrolladitos {
+    padding-top: 3rem;
+    padding-bottom: 1.6rem;
 }
 
-.corazon::before,
-.corazon::after {
-    content: "";
+.seccion-pan-jamon {
+    padding-top: 1.6rem;
+    padding-bottom: 3rem;
+}
+
+/* Dos círculos: afuera claro, adentro más dorado (como la referencia). */
+.circulo-fondo {
     position: absolute;
-    width: 56px;
-    height: 56px;
     border-radius: 50%;
-    background: inherit;
+    pointer-events: none;
 }
 
-.corazon::before {
-    top: -28px;
-    left: 0;
+/* Círculo interior (más oscuro / mostaza). */
+.circulo-fondo-1 {
+    z-index: 2;
+    width: 68%;
+    height: 68%;
+    background: #e8c15a;
 }
 
-.corazon::after {
-    top: 0;
-    left: 28px;
+/* Círculo exterior (más claro / crema dorada). */
+.circulo-fondo-2 {
+    z-index: 1;
+    width: 90%;
+    height: 90%;
+    background: #f3e0a8;
 }
 
-.corazon-1 {
-    width: 72px;
-    height: 72px;
-    top: 12%;
-    left: 10%;
-    background: #e0a82e;
-    opacity: 0.5;
-    animation-duration: 6s;
-}
-
-.corazon-1::before,
-.corazon-1::after {
-    width: 72px;
-    height: 72px;
-}
-
-.corazon-1::before { top: -36px; }
-.corazon-1::after { left: 36px; }
-
-.corazon-2 {
-    width: 44px;
-    height: 44px;
-    top: 18%;
-    right: 12%;
-    background: #c97a3a;
-    opacity: 0.45;
-    animation-duration: 4.8s;
-    animation-delay: 0.4s;
-}
-
-.corazon-2::before,
-.corazon-2::after {
-    width: 44px;
-    height: 44px;
-}
-
-.corazon-2::before { top: -22px; }
-.corazon-2::after { left: 22px; }
-
-.corazon-3 {
-    width: 38px;
-    height: 38px;
-    bottom: 16%;
-    left: 14%;
-    background: #f3d48a;
-    opacity: 0.6;
-    animation-duration: 5.2s;
-    animation-delay: 0.9s;
-}
-
-.corazon-3::before,
-.corazon-3::after {
-    width: 38px;
-    height: 38px;
-}
-
-.corazon-3::before { top: -19px; }
-.corazon-3::after { left: 19px; }
-
-.corazon-4 {
-    width: 50px;
-    height: 50px;
-    bottom: 20%;
-    right: 10%;
-    background: #d4922a;
-    opacity: 0.4;
-    animation-duration: 6.4s;
-    animation-delay: 0.2s;
-}
-
-.corazon-4::before,
-.corazon-4::after {
-    width: 50px;
-    height: 50px;
-}
-
-.corazon-4::before { top: -25px; }
-.corazon-4::after { left: 25px; }
-
-.corazon-5 {
-    width: 30px;
-    height: 30px;
-    top: 42%;
-    left: 6%;
-    background: #e8b85a;
-    opacity: 0.5;
-    animation-duration: 4.5s;
-    animation-delay: 1.2s;
-}
-
-.corazon-5::before,
-.corazon-5::after {
-    width: 30px;
-    height: 30px;
-}
-
-.corazon-5::before { top: -15px; }
-.corazon-5::after { left: 15px; }
-
-@keyframes corazon-flotar {
-    0%, 100% {
-        transform: rotate(-45deg) translateY(0) scale(1);
-    }
-    50% {
-        transform: rotate(-45deg) translateY(-14px) scale(1.08);
-    }
+.foto-pan-jamon img {
+    width: 94%;
 }
 
 /* En escritorio la foto ocupa un poco más que el texto. */
@@ -713,6 +606,15 @@ p {
     .foto-enrolladitos {
         width: 100%;
         max-width: 680px;
+    }
+
+    /* En pan de jamón el texto va primero y la foto a la derecha. */
+    .seccion-pan-jamon .dos-columnas {
+        grid-template-columns: 1fr 1.25fr;
+    }
+
+    .seccion-pan-jamon .foto-enrolladitos {
+        order: 2;
     }
 }
 
@@ -1166,8 +1068,13 @@ html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
 
     /* Menos espacio entre la foto de enrolladitos y el título. */
     .seccion-enrolladitos {
-        padding-top: 2.2rem;
-        padding-bottom: 2.2rem;
+        padding-top: 1.8rem;
+        padding-bottom: 1rem;
+    }
+
+    .seccion-pan-jamon {
+        padding-top: 1rem;
+        padding-bottom: 1.8rem;
     }
 
     .seccion-enrolladitos .dos-columnas {
@@ -1177,11 +1084,6 @@ html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
     .foto-enrolladitos {
         width: min(100%, 380px);
         margin-bottom: 0;
-    }
-
-    /* En móvil los corazones se quedan quietos. */
-    .corazon {
-        animation: none;
     }
 
     .seccion-enrolladitos .etiqueta {
