@@ -467,15 +467,16 @@ p {
     gap: 0.6rem;
     margin-top: 0.4rem;
     padding: 0.85rem 1.6rem;
+
     border: 0;
     border-radius: 999px;
     background: var(--dorado);
-    color: #ffffff;
+    color: #5a1810;
     font-family: inherit;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.25s ease;
+    transition: background 0.25s ease, color 0.25s ease;
 }
 
 .boton::after {
