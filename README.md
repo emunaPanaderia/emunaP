@@ -23,7 +23,8 @@ Hecha solo con **HTML, CSS y JavaScript**, sin frameworks ni librerías.
 | `contact.html` | Contacto (formulario + mapa) |
 | `style.css` | Estilos de las 4 páginas |
 | `script.js` | Menú, carrusel, fichas, WhatsApp, video, animaciones |
-| `img/` | Fotos WebP, logo, favicon y video de portada |
+| `img/` | Fotos WebP, logo y favicon |
+| `videos/` | Video de la portada |
 
 No hay Python ni carpetas temporales: solo lo que usa el sitio.
 
@@ -31,11 +32,14 @@ No hay Python ni carpetas temporales: solo lo que usa el sitio.
 
 ## Qué hay en `img/`
 
-- **Video:** `portada-fondo.mp4` (fondo de la portada).
+### `img/`
 - **Logo / ícono:** `logo.webp`, `favicon.ico`.
 - **Inicio:** `mano_obra.webp`, `enrolladitos.webp`, `PandeJamon.webp`, `fachada.webp`.
 - **Nosotros:** `model1.webp`.
 - **Carrusel y productos:** panes, enrollados, rellenos, bolitas, peguetas, brownie, galletas, turrón (todos en `.webp`).
+
+### `videos/`
+- **Portada:** `portada-fondo.mp4`.
 
 ---
 
@@ -107,4 +111,4 @@ Busca `wa.me/` en los HTML y en `script.js`.
 - Sitio estático: sin base de datos ni servidor propio.
 - El formulario no guarda datos; solo abre WhatsApp.
 - Las imágenes van en `.webp` para pesar menos.
-- El video de portada debe llamarse exactamente `img/portada-fondo.mp4`.
+- El video de portada debe estar en `videos/portada-fondo.mp4`.
