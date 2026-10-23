@@ -6,9 +6,9 @@
    ========================================= */
 
 :root {
-    /* Crema cálido (sin verde/amarillo limón). Combina con marrón y dorado. */
-    --crema: #f7f0e4;
-    --crema-oscura: #efe4d2;
+    /* Crema cálido, un poco más oscuro. Combina con marrón y dorado. */
+    --crema: #efe4d0;
+    --crema-oscura: #e6d5bb;
     --marron: #4a2218;
     --texto: #3f2c26;
     --texto-suave: #6e584f;
@@ -376,6 +376,12 @@ p {
     transition: scale 0.25s ease, opacity 0.25s ease;
 }
 
+/* Mientras el carrusel se mueve (solo escritorio), las tarjetas se achican un poco. */
+.carrusel.moviendo .carrusel-item {
+    scale: 0.96;
+    opacity: 0.85;
+}
+
 .carrusel-item img {
     width: 100%;
     aspect-ratio: 1;
@@ -537,17 +543,15 @@ p {
     border-radius: 8px;
 }
 
-/* Foto de enrolladitos: más grande, con círculo dorado detrás. */
+/* Foto de enrolladitos: mismo círculo dorado que el panadero en Nosotros. */
 .foto-enrolladitos {
     display: grid;
     place-items: center;
     width: min(100%, 640px);
     margin-inline: auto;
     aspect-ratio: 1;
-    background:
-        radial-gradient(circle at 50% 55%, rgba(224, 168, 46, 0.45) 0 42%, transparent 43%),
-        radial-gradient(circle at 50% 55%, rgba(243, 212, 138, 0.55) 0 58%, transparent 59%);
-    filter: drop-shadow(0 18px 28px rgba(74, 34, 24, 0.22));
+    background: radial-gradient(circle at 50% 58%, var(--dorado-suave) 0 47%, transparent 47.5%);
+    filter: drop-shadow(0 14px 18px rgba(42, 16, 10, 0.25));
 }
 
 .foto-enrolladitos img {
@@ -778,6 +782,56 @@ p {
     border-color: transparent;
 }
 
+/* ---------- Animaciones al bajar (solo escritorio) ----------
+   El script pone la clase "entra". Al verse, pone "visto" y arranca el movimiento. */
+
+html.con-scroll .entra:not(.visto) {
+    opacity: 0;
+}
+
+html.con-scroll .visto.m-izq { animation: m-izq 0.8s ease both; }
+html.con-scroll .visto.m-der { animation: m-der 0.85s ease both; }
+html.con-scroll .visto.m-sube { animation: m-sube 0.9s ease both; }
+html.con-scroll .visto.m-baja { animation: m-baja 0.75s ease both; }
+html.con-scroll .visto.m-crece { animation: m-crece 0.7s ease both; }
+html.con-scroll .visto.m-gira { animation: m-gira 0.95s ease both; }
+html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
+
+@keyframes m-izq {
+    from { opacity: 0; transform: translateX(-64px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes m-der {
+    from { opacity: 0; transform: translateX(64px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes m-sube {
+    from { opacity: 0; transform: translateY(48px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes m-baja {
+    from { opacity: 0; transform: translateY(-36px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes m-crece {
+    from { opacity: 0; transform: scale(0.88); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes m-gira {
+    from { opacity: 0; transform: rotate(-4deg) translateY(28px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes m-nace {
+    from { opacity: 0; transform: scale(0.7) translateY(24px); }
+    to { opacity: 1; transform: none; }
+}
+
 /* ---------- Pie de pagina ---------- */
 
 .pie {
@@ -945,6 +999,26 @@ p {
 
     .nosotros .dos-columnas > div {
         padding-bottom: 0;
+    }
+
+    /* En móvil: sin animaciones de entrada ni del carrusel. */
+    .carrusel.moviendo .carrusel-item {
+        scale: 1;
+        opacity: 1;
+    }
+
+    html.con-scroll .entra:not(.visto) {
+        opacity: 1;
+    }
+
+    html.con-scroll .visto.m-izq,
+    html.con-scroll .visto.m-der,
+    html.con-scroll .visto.m-sube,
+    html.con-scroll .visto.m-baja,
+    html.con-scroll .visto.m-crece,
+    html.con-scroll .visto.m-gira,
+    html.con-scroll .visto.m-nace {
+        animation: none;
     }
 
     /* Menos espacio entre la foto de enrolladitos y el título. */

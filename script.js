@@ -10,7 +10,13 @@
    3. Mueve el carrusel de productos (inicio)
    4. Voltea las fichas de productos al hacer clic
    5. Baja un poco la velocidad del video de la portada
+   6. Animaciones al bajar (solo en escritorio)
 */
+
+/* En celular (800px o menos) no usamos animaciones de movimiento. */
+function esEscritorio() {
+    return window.matchMedia("(min-width: 801px)").matches;
+}
 
 /* ---------- 1. Menú del celular ----------
    Al tocar el botón de las 3 rayas, se abre o se cierra el menú. */
@@ -93,6 +99,17 @@ if (carrusel) {
         return tarjeta.offsetWidth + espacio;
     }
 
+    /* En escritorio las tarjetas se achican un poco mientras se mueven. */
+    function animarMovimiento() {
+        if (!esEscritorio()) {
+            return;
+        }
+        carrusel.classList.add("moviendo");
+        setTimeout(function () {
+            carrusel.classList.remove("moviendo");
+        }, 450);
+    }
+
     /* Mueve el carrusel a la izquierda (-1) o a la derecha (1) */
     function moverCarrusel(direccion) {
         var paso = pasoCarrusel();
@@ -100,6 +117,8 @@ if (carrusel) {
             carrusel.scrollLeft + carrusel.clientWidth >=
             carrusel.scrollWidth - 4;
         var alInicio = carrusel.scrollLeft <= 4;
+
+        animarMovimiento();
 
         if (direccion > 0 && alFinal) {
             /* Si ya está al final, vuelve al principio */
@@ -168,6 +187,7 @@ if (carrusel) {
 
             punto.addEventListener("click", function () {
                 var indice = Number(this.getAttribute("data-indice"));
+                animarMovimiento();
                 carrusel.scrollTo({
                     left: indice * pasoCarrusel(),
                     behavior: "smooth"
@@ -221,4 +241,99 @@ var videoPortada = document.querySelector(".bg-video");
 
 if (videoPortada) {
     videoPortada.playbackRate = 0.75;
+}
+
+/* ---------- 6. Animaciones al bajar ----------
+   Solo en escritorio. Anima secciones, textos, fotos y fichas
+   cuando aparecen al bajar. En celular no se anima nada. */
+
+if (esEscritorio()) {
+    var piezas = [];
+    var yaAgregado = [];
+    var tipos = ["sube", "crece", "nace", "baja", "izq", "der", "gira"];
+
+    function yaEsta(nodo) {
+        for (var i = 0; i < yaAgregado.length; i++) {
+            if (yaAgregado[i] === nodo) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function agregarPiezas(selector, tipoFijo) {
+        var nodos = document.querySelectorAll(selector);
+        for (var i = 0; i < nodos.length; i++) {
+            var nodo = nodos[i];
+            /* No animamos menú, pie ni el botón flotante de WhatsApp */
+            if (nodo.closest(".menu") || nodo.closest(".pie") || nodo.closest(".whatsapp")) {
+                continue;
+            }
+            if (yaEsta(nodo)) {
+                continue;
+            }
+            var tipo = tipoFijo || tipos[i % tipos.length];
+            piezas.push({ nodo: nodo, tipo: tipo });
+            yaAgregado.push(nodo);
+        }
+    }
+
+    /* Fotos e imágenes de las secciones */
+    agregarPiezas(".foto-redonda, .panadero, .foto-local, .foto-enrolladitos", "crece");
+    agregarPiezas("main img, .seccion img, .vitrina img, .pagina img", "crece");
+
+    /* Textos y títulos de cada sección */
+    agregarPiezas(".titulo-seccion, .pagina h1, .vitrina h1", "baja");
+    agregarPiezas(".seccion h2, .grupo h2", "baja");
+    agregarPiezas(".seccion .etiqueta, .grupo .bajada", "baja");
+    agregarPiezas(".seccion p, .grupo p, .pagina p", "sube");
+    agregarPiezas(".seccion h3, .pagina h3", "nace");
+
+    /* Columnas, formularios y mapas */
+    agregarPiezas(".dos-columnas > div", "der");
+    agregarPiezas(".formulario", "izq");
+    agregarPiezas(".datos", "der");
+    agregarPiezas(".mapa, .mapa-grande", "crece");
+    agregarPiezas(".redes-contacto", "sube");
+    agregarPiezas(".boton", "nace");
+
+    /* Carrusel y fichas de productos */
+    agregarPiezas(".carrusel-marco, .carrusel", "sube");
+    agregarPiezas(".carrusel-item", "sube");
+    agregarPiezas(".ficha", "sube");
+    agregarPiezas(".grupo", "sube");
+
+    if (piezas.length > 0) {
+        document.documentElement.classList.add("con-scroll");
+
+        var observador = new IntersectionObserver(function (entradas) {
+            for (var e = 0; e < entradas.length; e++) {
+                if (entradas[e].isIntersecting) {
+                    entradas[e].target.classList.add("visto");
+                    observador.unobserve(entradas[e].target);
+                }
+            }
+        }, { threshold: 0.15, rootMargin: "0px 0px -6% 0px" });
+
+        for (var p = 0; p < piezas.length; p++) {
+            var pieza = piezas[p];
+            pieza.nodo.classList.add("entra", "m-" + pieza.tipo);
+
+            /* En rejillas, cada pieza entra un poco después de la anterior */
+            var grupo = pieza.nodo.parentElement;
+            if (grupo && (grupo.classList.contains("fichas") || grupo.classList.contains("carrusel"))) {
+                var orden = 0;
+                var hijos = grupo.children;
+                for (var h = 0; h < hijos.length; h++) {
+                    if (hijos[h] === pieza.nodo) {
+                        orden = h;
+                        break;
+                    }
+                }
+                pieza.nodo.style.animationDelay = ((orden % 4) * 0.12) + "s";
+            }
+
+            observador.observe(pieza.nodo);
+        }
+    }
 }
