@@ -470,7 +470,7 @@ p {
     border: 0;
     border-radius: 999px;
     background: var(--dorado);
-    color: var(--marron);
+    color: #ffffff;
     font-family: inherit;
     font-size: 1rem;
     font-weight: 600;
@@ -498,7 +498,7 @@ p {
 
 .boton-oscuro {
     background: var(--marron);
-    color: var(--crema);
+    color: #ffffff;
 }
 
 .boton-oscuro:hover {
@@ -543,21 +543,164 @@ p {
     border-radius: 8px;
 }
 
-/* Foto de enrolladitos: mismo círculo dorado que el panadero en Nosotros. */
+/* Foto de enrolladitos con corazones animados detrás. */
 .foto-enrolladitos {
+    position: relative;
     display: grid;
     place-items: center;
     width: min(100%, 640px);
     margin-inline: auto;
     aspect-ratio: 1;
-    background: radial-gradient(circle at 50% 58%, var(--dorado-suave) 0 47%, transparent 47.5%);
-    filter: drop-shadow(0 14px 18px rgba(42, 16, 10, 0.25));
+    isolation: isolate;
 }
 
 .foto-enrolladitos img {
+    position: relative;
+    z-index: 2;
     width: 96%;
     height: auto;
     object-fit: contain;
+    filter: drop-shadow(0 14px 18px rgba(42, 16, 10, 0.25));
+}
+
+/* Corazón hecho con CSS (dos círculos + un cuadrado). */
+.corazon {
+    position: absolute;
+    z-index: 1;
+    width: 56px;
+    height: 56px;
+    background: var(--dorado);
+    opacity: 0.55;
+    transform: rotate(-45deg);
+    animation: corazon-flotar 5.5s ease-in-out infinite;
+}
+
+.corazon::before,
+.corazon::after {
+    content: "";
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: inherit;
+}
+
+.corazon::before {
+    top: -28px;
+    left: 0;
+}
+
+.corazon::after {
+    top: 0;
+    left: 28px;
+}
+
+.corazon-1 {
+    width: 72px;
+    height: 72px;
+    top: 12%;
+    left: 10%;
+    background: #e0a82e;
+    opacity: 0.5;
+    animation-duration: 6s;
+}
+
+.corazon-1::before,
+.corazon-1::after {
+    width: 72px;
+    height: 72px;
+}
+
+.corazon-1::before { top: -36px; }
+.corazon-1::after { left: 36px; }
+
+.corazon-2 {
+    width: 44px;
+    height: 44px;
+    top: 18%;
+    right: 12%;
+    background: #c97a3a;
+    opacity: 0.45;
+    animation-duration: 4.8s;
+    animation-delay: 0.4s;
+}
+
+.corazon-2::before,
+.corazon-2::after {
+    width: 44px;
+    height: 44px;
+}
+
+.corazon-2::before { top: -22px; }
+.corazon-2::after { left: 22px; }
+
+.corazon-3 {
+    width: 38px;
+    height: 38px;
+    bottom: 16%;
+    left: 14%;
+    background: #f3d48a;
+    opacity: 0.6;
+    animation-duration: 5.2s;
+    animation-delay: 0.9s;
+}
+
+.corazon-3::before,
+.corazon-3::after {
+    width: 38px;
+    height: 38px;
+}
+
+.corazon-3::before { top: -19px; }
+.corazon-3::after { left: 19px; }
+
+.corazon-4 {
+    width: 50px;
+    height: 50px;
+    bottom: 20%;
+    right: 10%;
+    background: #d4922a;
+    opacity: 0.4;
+    animation-duration: 6.4s;
+    animation-delay: 0.2s;
+}
+
+.corazon-4::before,
+.corazon-4::after {
+    width: 50px;
+    height: 50px;
+}
+
+.corazon-4::before { top: -25px; }
+.corazon-4::after { left: 25px; }
+
+.corazon-5 {
+    width: 30px;
+    height: 30px;
+    top: 42%;
+    left: 6%;
+    background: #e8b85a;
+    opacity: 0.5;
+    animation-duration: 4.5s;
+    animation-delay: 1.2s;
+}
+
+.corazon-5::before,
+.corazon-5::after {
+    width: 30px;
+    height: 30px;
+}
+
+.corazon-5::before { top: -15px; }
+.corazon-5::after { left: 15px; }
+
+@keyframes corazon-flotar {
+    0%, 100% {
+        transform: rotate(-45deg) translateY(0) scale(1);
+    }
+    50% {
+        transform: rotate(-45deg) translateY(-14px) scale(1.08);
+    }
 }
 
 /* En escritorio la foto ocupa un poco más que el texto. */
@@ -1034,6 +1177,11 @@ html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
     .foto-enrolladitos {
         width: min(100%, 380px);
         margin-bottom: 0;
+    }
+
+    /* En móvil los corazones se quedan quietos. */
+    .corazon {
+        animation: none;
     }
 
     .seccion-enrolladitos .etiqueta {
