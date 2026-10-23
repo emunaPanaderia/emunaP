@@ -221,7 +221,7 @@ El inicio se lee de arriba hacia abajo en varias secciones.
     <div class="video-overlay"></div>
     <div class="hero-content">
         <h1>Panadería La Emuna</h1>
-        <p class="hero-frase">Vendemos pan de jamón y felicidad</p>
+        <p class="hero-frase">Vendemos pan y felicidad</p>
         <a href="contact.html" class="boton">Ver ubicaciones</a>
     </div>
 </section>
