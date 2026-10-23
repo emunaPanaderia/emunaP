@@ -1,281 +1,224 @@
-/* La Emuna — script.js
-   JavaScript puro, sin librerías.
-   1. Menú en celular
-   2. Mensaje por WhatsApp
-   3. Animaciones distintas al bajar
-   4. Fotos de la portada
-   5. Carrusel de productos
-   6. Fichas de productos que se voltean */
+/* =========================================
+   La Emuna — script.js
+   JavaScript simple, sin librerías.
+   Sirve para las 4 páginas del sitio.
+   =========================================
 
-/* ---------- 1. Menú ---------- */
+   Qué hace este archivo:
+   1. Abre y cierra el menú en el celular
+   2. Envía el formulario de contacto a WhatsApp
+   3. Mueve el carrusel de productos (inicio)
+   4. Voltea las fichas de productos al hacer clic
+   5. Baja un poco la velocidad del video de la portada
+*/
 
-const botonMenu = document.querySelector(".menu-boton");
-const nav = document.querySelector(".nav");
+/* ---------- 1. Menú del celular ----------
+   Al tocar el botón de las 3 rayas, se abre o se cierra el menú. */
+
+var botonMenu = document.querySelector(".menu-boton");
+var nav = document.querySelector(".nav");
 
 if (botonMenu && nav) {
-    botonMenu.addEventListener("click", () => {
-        const abierto = nav.classList.toggle("abierto");
-        botonMenu.classList.toggle("abierto", abierto);
-        botonMenu.setAttribute("aria-expanded", abierto ? "true" : "false");
-        botonMenu.setAttribute("aria-label", abierto ? "Cerrar menú" : "Abrir menú");
+    botonMenu.addEventListener("click", function () {
+        nav.classList.toggle("abierto");
+        botonMenu.classList.toggle("abierto");
+
+        /* Cambia el texto del botón para accesibilidad */
+        if (nav.classList.contains("abierto")) {
+            botonMenu.setAttribute("aria-expanded", "true");
+            botonMenu.setAttribute("aria-label", "Cerrar menú");
+        } else {
+            botonMenu.setAttribute("aria-expanded", "false");
+            botonMenu.setAttribute("aria-label", "Abrir menú");
+        }
     });
 
-    /* Al tocar un enlace, el menú se cierra. */
-    nav.querySelectorAll("a").forEach((enlace) => {
-        enlace.addEventListener("click", () => {
+    /* Si tocas un enlace del menú, se cierra solo */
+    var enlaces = nav.querySelectorAll("a");
+    for (var i = 0; i < enlaces.length; i++) {
+        enlaces[i].addEventListener("click", function () {
             nav.classList.remove("abierto");
             botonMenu.classList.remove("abierto");
             botonMenu.setAttribute("aria-expanded", "false");
             botonMenu.setAttribute("aria-label", "Abrir menú");
         });
-    });
+    }
 }
 
-/* ---------- 2. Mensaje ----------
-   No hay servidor: el formulario abre WhatsApp con el texto escrito. */
+/* ---------- 2. Formulario → WhatsApp ----------
+   No hay servidor. Al enviar, se abre WhatsApp
+   con el nombre, teléfono y mensaje escritos. */
 
-const formulario = document.querySelector("#formulario");
+var formulario = document.getElementById("formulario");
 
 if (formulario) {
-    formulario.addEventListener("submit", (evento) => {
-        evento.preventDefault();
-        const datos = new FormData(formulario);
-        const texto = [
-            "Hola, les escribo desde la página.",
-            "Nombre: " + datos.get("nombre"),
-            "Teléfono: " + datos.get("telefono"),
-            "Mensaje: " + datos.get("detalle")
-        ].join("\n");
-        const enlace = "https://wa.me/+573001059833?text=" + encodeURIComponent(texto);
-        window.open(enlace, "_blank", "noopener");
+    formulario.addEventListener("submit", function (evento) {
+        evento.preventDefault(); /* Evita que la página se recargue */
+
+        var nombre = document.getElementById("nombre").value;
+        var telefono = document.getElementById("telefono").value;
+        var mensaje = document.getElementById("detalle").value;
+
+        var texto =
+            "Hola, les escribo desde la página.\n" +
+            "Nombre: " + nombre + "\n" +
+            "Teléfono: " + telefono + "\n" +
+            "Mensaje: " + mensaje;
+
+        var enlace =
+            "https://wa.me/+573001059833?text=" +
+            encodeURIComponent(texto);
+
+        window.open(enlace, "_blank");
     });
 }
 
-/* ---------- 3. Al bajar ----------
-   Cada bloque usa un movimiento distinto. Si no hay JS, el contenido se ve igual. */
+/* ---------- 3. Carrusel de productos ----------
+   Solo aparece en el inicio.
+   Las flechas mueven una tarjeta.
+   Cada 3 segundos avanza solo.
+   Los puntos indican en qué parte vas. */
 
-const piezas = [];
-
-document.querySelectorAll(".cat").forEach((tarjeta, i) => {
-    piezas.push([tarjeta, ["sube", "crece", "nace", "baja"][i % 4]]);
-});
-
-document.querySelectorAll(".foto-redonda, .panadero, .foto-local").forEach((foto) => piezas.push([foto, "crece"]));
-document.querySelectorAll(".dos-columnas > div").forEach((bloque) => piezas.push([bloque, "der"]));
-
-document.querySelectorAll(".tarjeta").forEach((tarjeta, i) => {
-    piezas.push([tarjeta, ["sube", "gira", "nace"][i % 3]]);
-});
-
-document.querySelectorAll(".ficha").forEach((ficha) => piezas.push([ficha, "sube"]));
-
-document.querySelectorAll(".formulario").forEach((formularioPedido) => piezas.push([formularioPedido, "izq"]));
-document.querySelectorAll(".datos").forEach((datos) => piezas.push([datos, "der"]));
-document.querySelectorAll(".mapa-grande, .carrusel").forEach((bloque) => piezas.push([bloque, "sube"]));
-document.querySelectorAll(".titulo-seccion").forEach((titulo) => piezas.push([titulo, "baja"]));
-
-if (piezas.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.documentElement.classList.add("con-scroll");
-
-    const observador = new IntersectionObserver((entradas) => {
-        entradas.forEach((entrada) => {
-            if (entrada.isIntersecting) {
-                entrada.target.classList.add("visto");
-                observador.unobserve(entrada.target);
-            }
-        });
-    }, { threshold: 0.2, rootMargin: "0px 0px -8% 0px" });
-
-    piezas.forEach(([nodo, tipo]) => {
-        nodo.classList.add("entra", "m-" + tipo);
-        const grupo = nodo.parentElement;
-        if (grupo && (grupo.classList.contains("tarjetas") || grupo.classList.contains("categorias"))) {
-            const orden = [...grupo.children].indexOf(nodo);
-            nodo.style.animationDelay = (orden * 0.14) + "s";
-        }
-        /* En la cuadrícula de productos el retraso se repite por fila, para no esperar tanto. */
-        if (grupo && grupo.classList.contains("fichas")) {
-            const orden = [...grupo.children].indexOf(nodo);
-            nodo.style.animationDelay = ((orden % 4) * 0.1) + "s";
-        }
-        observador.observe(nodo);
-    });
-}
-
-/* ---------- 4. Portada ----------
-   Cada 5 segundos pasa a la foto siguiente. Si el usuario pidió menos
-   movimiento, se queda la primera.
-   Solo la primera foto se descarga al abrir la página. Las demás (data-foto)
-   se piden cuando la página ya cargó, y no se muestran hasta estar listas. */
-
-const fotosPortada = document.querySelectorAll(".hero-foto");
-
-if (fotosPortada.length > 1 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    window.addEventListener("load", () => {
-        fotosPortada.forEach((foto) => {
-            if (!foto.dataset.foto) {
-                return;
-            }
-            const imagen = new Image();
-            imagen.onload = () => {
-                foto.style.setProperty("--foto", "url('" + foto.dataset.foto + "')");
-                foto.dataset.lista = "si";
-            };
-            imagen.src = foto.dataset.foto;
-        });
-    });
-
-    let actual = 0;
-    setInterval(() => {
-        const siguiente = (actual + 1) % fotosPortada.length;
-        const lista = siguiente === 0 || fotosPortada[siguiente].dataset.lista === "si";
-        if (!lista) {
-            return;
-        }
-        fotosPortada[actual].classList.remove("activa");
-        fotosPortada[siguiente].classList.add("activa");
-        actual = siguiente;
-    }, 5000);
-}
-
-/* ---------- 5. Carrusel ----------
-   Las flechas avanzan una tarjeta. Al llegar al final vuelve al principio.
-   Gira solo cada 3 segundos, salvo con el ratón o el foco encima. */
-
-const carrusel = document.querySelector(".carrusel");
+var carrusel = document.querySelector(".carrusel");
 
 if (carrusel) {
-    const pasoCarrusel = () => {
-        const tarjeta = carrusel.querySelector(".carrusel-item");
-        return tarjeta.offsetWidth + parseFloat(getComputedStyle(carrusel).columnGap);
-    };
-
-    /* Desliza hasta "destino" en 450 ms: arranca suave, acelera y frena suave.
-       Mientras se mueve se apaga el imán (scroll-snap) para que no tironee,
-       y las tarjetas se encogen un poco (clase "moviendo" en el CSS). */
-    const sinMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let animacion = 0;
-
-    const irA = (destino) => {
-        const maximo = carrusel.scrollWidth - carrusel.clientWidth;
-        destino = Math.max(0, Math.min(destino, maximo));
-
-        if (sinMovimiento) {
-            carrusel.scrollLeft = destino;
-            return;
+    /* Cuánto hay que mover: ancho de una tarjeta + el espacio entre ellas */
+    function pasoCarrusel() {
+        var tarjeta = carrusel.querySelector(".carrusel-item");
+        var estilos = window.getComputedStyle(carrusel);
+        var espacio = parseFloat(estilos.columnGap);
+        if (isNaN(espacio)) {
+            espacio = 0;
         }
+        return tarjeta.offsetWidth + espacio;
+    }
 
-        cancelAnimationFrame(animacion);
-        const desde = carrusel.scrollLeft;
-        const duracion = 450;
-        const inicio = performance.now();
-        carrusel.style.scrollSnapType = "none";
-        carrusel.classList.add("moviendo");
-
-        const paso = (ahora) => {
-            const t = Math.min((ahora - inicio) / duracion, 1);
-            const curva = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-            carrusel.scrollLeft = desde + (destino - desde) * curva;
-            if (t < 1) {
-                animacion = requestAnimationFrame(paso);
-            } else {
-                carrusel.style.scrollSnapType = "";
-                carrusel.classList.remove("moviendo");
-            }
-        };
-        animacion = requestAnimationFrame(paso);
-    };
-
-    const moverCarrusel = (direccion) => {
-        const alFinal = carrusel.scrollLeft + carrusel.clientWidth >= carrusel.scrollWidth - 4;
-        const alInicio = carrusel.scrollLeft <= 4;
+    /* Mueve el carrusel a la izquierda (-1) o a la derecha (1) */
+    function moverCarrusel(direccion) {
+        var paso = pasoCarrusel();
+        var alFinal =
+            carrusel.scrollLeft + carrusel.clientWidth >=
+            carrusel.scrollWidth - 4;
+        var alInicio = carrusel.scrollLeft <= 4;
 
         if (direccion > 0 && alFinal) {
-            irA(0);
+            /* Si ya está al final, vuelve al principio */
+            carrusel.scrollTo({ left: 0, behavior: "smooth" });
         } else if (direccion < 0 && alInicio) {
-            irA(carrusel.scrollWidth);
+            /* Si está al inicio y va hacia atrás, va al final */
+            carrusel.scrollTo({
+                left: carrusel.scrollWidth,
+                behavior: "smooth"
+            });
         } else {
-            const actual = Math.round(carrusel.scrollLeft / pasoCarrusel());
-            irA((actual + direccion) * pasoCarrusel());
+            carrusel.scrollBy({
+                left: direccion * paso,
+                behavior: "smooth"
+            });
         }
-    };
+    }
 
-    document.querySelectorAll(".carrusel-flecha").forEach((flecha) => {
-        flecha.addEventListener("click", () => moverCarrusel(Number(flecha.dataset.dir)));
-    });
-
-    /* Un punto por cada posición a la que se puede llegar (cambia con el ancho de pantalla). */
-    const puntos = document.querySelector(".carrusel-puntos");
-
-    const marcarPunto = () => {
-        const actual = Math.round(carrusel.scrollLeft / pasoCarrusel());
-        puntos.querySelectorAll(".carrusel-punto").forEach((punto, i) => {
-            punto.classList.toggle("activo", i === actual);
-            if (i === actual) {
-                punto.setAttribute("aria-current", "true");
-            } else {
-                punto.removeAttribute("aria-current");
-            }
+    /* Flechas izquierda y derecha */
+    var flechas = document.querySelectorAll(".carrusel-flecha");
+    for (var f = 0; f < flechas.length; f++) {
+        flechas[f].addEventListener("click", function () {
+            var dir = Number(this.getAttribute("data-dir"));
+            moverCarrusel(dir);
         });
-    };
+    }
 
-    const crearPuntos = () => {
-        const cantidad = Math.round((carrusel.scrollWidth - carrusel.clientWidth) / pasoCarrusel()) + 1;
-        puntos.innerHTML = "";
-        for (let i = 0; i < cantidad; i++) {
-            const punto = document.createElement("button");
+    /* ---------- Puntos guía ---------- */
+    var cajaPuntos = document.querySelector(".carrusel-puntos");
+
+    function marcarPunto() {
+        if (!cajaPuntos) {
+            return;
+        }
+        var actual = Math.round(carrusel.scrollLeft / pasoCarrusel());
+        var puntos = cajaPuntos.querySelectorAll(".carrusel-punto");
+        for (var p = 0; p < puntos.length; p++) {
+            if (p === actual) {
+                puntos[p].classList.add("activo");
+            } else {
+                puntos[p].classList.remove("activo");
+            }
+        }
+    }
+
+    function crearPuntos() {
+        if (!cajaPuntos) {
+            return;
+        }
+        var paso = pasoCarrusel();
+        var cantidad =
+            Math.round(
+                (carrusel.scrollWidth - carrusel.clientWidth) / paso
+            ) + 1;
+
+        cajaPuntos.innerHTML = "";
+
+        for (var i = 0; i < cantidad; i++) {
+            var punto = document.createElement("button");
             punto.type = "button";
             punto.className = "carrusel-punto";
             punto.setAttribute("aria-label", "Ir al producto " + (i + 1));
-            punto.addEventListener("click", () => {
-                irA(i * pasoCarrusel());
+
+            /* Guardamos el número en un atributo para usarlo al hacer clic */
+            punto.setAttribute("data-indice", String(i));
+
+            punto.addEventListener("click", function () {
+                var indice = Number(this.getAttribute("data-indice"));
+                carrusel.scrollTo({
+                    left: indice * pasoCarrusel(),
+                    behavior: "smooth"
+                });
             });
-            puntos.appendChild(punto);
+
+            cajaPuntos.appendChild(punto);
         }
         marcarPunto();
-    };
-
-    if (puntos) {
-        crearPuntos();
-        carrusel.addEventListener("scroll", marcarPunto, { passive: true });
-        window.addEventListener("resize", crearPuntos);
     }
 
-    if (!sinMovimiento) {
-        let enPausa = false;
-        const zona = carrusel.closest(".contenedor");
+    crearPuntos();
+    carrusel.addEventListener("scroll", marcarPunto);
+    window.addEventListener("resize", crearPuntos);
 
-        zona.addEventListener("pointerenter", () => { enPausa = true; });
-        zona.addEventListener("pointerleave", () => { enPausa = false; });
-        zona.addEventListener("focusin", () => { enPausa = true; });
-        zona.addEventListener("focusout", () => { enPausa = false; });
+    /* Avanza solo cada 3 segundos. Se pausa si el mouse está encima. */
+    var enPausa = false;
+    var zona = carrusel.closest(".contenedor");
 
-        setInterval(() => {
-            if (!enPausa && !document.hidden) {
-                moverCarrusel(1);
-            }
-        }, 3000);
+    if (zona) {
+        zona.addEventListener("mouseenter", function () {
+            enPausa = true;
+        });
+        zona.addEventListener("mouseleave", function () {
+            enPausa = false;
+        });
     }
+
+    setInterval(function () {
+        if (!enPausa && !document.hidden) {
+            moverCarrusel(1);
+        }
+    }, 3000);
 }
 
-/* ---------- 6. Fichas ----------
-   Con el ratón se voltean solas (CSS). Con un clic, un toque o Enter quedan volteadas. */
-document.querySelectorAll(".ficha").forEach((ficha) => {
-    ficha.addEventListener("click", () => ficha.classList.toggle("volteada"));
-    ficha.addEventListener("keydown", (evento) => {
-        if (evento.key === "Enter" || evento.key === " ") {
-            evento.preventDefault();
-            ficha.classList.toggle("volteada");
-        }
+/* ---------- 4. Fichas que se voltean ----------
+   En Productos, al hacer clic la tarjeta gira y muestra el texto de atrás. */
+
+var fichas = document.querySelectorAll(".ficha");
+
+for (var j = 0; j < fichas.length; j++) {
+    fichas[j].addEventListener("click", function () {
+        this.classList.toggle("volteada");
     });
-});
+}
 
-/* ---------- Video de Portada (Velocidad) ---------- */
+/* ---------- 5. Video de la portada ----------
+   Solo en el inicio. Baja un poco la velocidad para que se vea más suave. */
 
-const videoPortada = document.querySelector(".bg-video");
+var videoPortada = document.querySelector(".bg-video");
 
 if (videoPortada) {
-    // 0.75 ralentiza ligeramente el video (cámara lenta suave). 
-    // 1.0 es la velocidad normal.
-    videoPortada.playbackRate = 0.75; 
+    videoPortada.playbackRate = 0.75;
 }

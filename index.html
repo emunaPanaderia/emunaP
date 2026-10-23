@@ -10,10 +10,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <!-- La primera foto de la portada se descarga primero, para que no tarde en verse. -->
-    <link rel="preload" as="image" href="img/hero-mesa.webp" fetchpriority="high">
 </head>
 <body>
+
+    <!-- Menú de arriba. En celular se abre con el botón de las 3 rayas (script.js). -->
     <header class="menu">
         <div class="contenedor menu-barra">
             <a class="logo" href="index.html">
@@ -34,26 +34,22 @@
             </nav>
         </div>
     </header>
-    <!-- Las fotos cambian solas cada 5 segundos (script.js). El velo oscuro va en el CSS. -->
-    
-<section class="hero" aria-label="Portada">
-    <!-- Video de fondo -->
-    <video autoplay muted loop playsinline preload="auto" class="bg-video">
-        <source src="img/portada-fondo.mp4" type="video/mp4">
-        Tu navegador no soporta video en segundo plano.
-    </video>
 
-    <!-- Overlay oscuro -->
-    <div class="video-overlay"></div>
+    <!-- Portada: video de fondo + título + botón. -->
+    <section class="hero" aria-label="Portada">
+        <video autoplay muted loop playsinline preload="auto" class="bg-video">
+            <source src="img/portada-fondo.mp4" type="video/mp4">
+            Tu navegador no soporta video en segundo plano.
+        </video>
+        <div class="video-overlay"></div>
+        <div class="hero-content">
+            <h1>Panadería La Emuna</h1>
+            <p class="hero-frase">Vendemos pan y felicidad</p>
+            <a href="contact.html" class="boton">Ver ubicaciones</a>
+        </div>
+    </section>
 
-    <!-- Contenido centrado -->
-    <div class="hero-content">
-        <h1>Panadería La Emuna</h1>
-        <p class="hero-frase">Vendemos pan y felicidad</p>
-        <a href="contact.html" class="boton">Ver ubicaciones</a>
-    </div>
-</section>
-    <!-- Carrusel con lo que se vende en la tienda. Para cambiar una foto, cambia el src de su img. -->
+    <!-- Carrusel: para cambiar una foto, cambia el src de su img. -->
     <section class="seccion">
         <div class="contenedor">
             <div class="titulo-seccion">
@@ -71,63 +67,63 @@
                 </div>
                 <ul class="carrusel" aria-label="Productos de La Emuna">
                     <li class="carrusel-item">
-                        <img src="img/PanAzucarado.jpg" alt="Pan azucarado" loading="lazy">
+                        <img src="img/PanAzucarado.webp" alt="Pan azucarado" loading="lazy">
                         <h3>Pan azucarado</h3>
                     </li>
                     <li class="carrusel-item">
-                        <img src="img/Pandeleche.jpg" alt="Pan de leche" loading="lazy">
+                        <img src="img/Pandeleche.webp" alt="Pan de leche" loading="lazy">
                         <h3>Pan de leche</h3>
                     </li>
                     <li class="carrusel-item">
-                        <img src="img/Pandemantequilla.jpg" alt="Pan de mantequilla" loading="lazy">
+                        <img src="img/Pandemantequilla.webp" alt="Pan de mantequilla" loading="lazy">
                         <h3>Pan de mantequilla</h3>
                     </li>
                     <li class="carrusel-item">
-                        <img src="img/enrolladodeArequipe.jpg" alt="Enrollado de Arequipe" loading="lazy">
+                        <img src="img/enrolladodeArequipe.webp" alt="Enrollado de Arequipe" loading="lazy">
                         <h3>Enrollado de Arequipe</h3>
                     </li>
                     <li class="carrusel-item">
-                        <img src="img/enrrolladoBocadillo.jpg" alt="Enrollado de Bocadillo" loading="lazy">
+                        <img src="img/enrrolladoBocadillo.webp" alt="Enrollado de Bocadillo" loading="lazy">
                         <h3>Enrollado de Bocadillo</h3>
                     </li>
                     <li class="carrusel-item">
-                        <img src="img/enrrolladoQueso.jpg" alt="Enrollado de Queso" loading="lazy">
+                        <img src="img/enrrolladoQueso.webp" alt="Enrollado de Queso" loading="lazy">
                         <h3>Enrollado de Queso</h3>
                     </li>
                     <li class="carrusel-item">
-                        <img src="img/RellenoQuesoBocadillo.jpg" alt="Pan relleno de queso y bocadillo" loading="lazy">
+                        <img src="img/RellenoQuesoBocadillo.webp" alt="Pan relleno de queso y bocadillo" loading="lazy">
                         <h3>Pan relleno de queso y bocadillo</h3>
                     </li>
                     <li class="carrusel-item">
-                        <img src="img/RellenoQuesoArequipe.jpg" alt="Pan relleno de queso y arequipe" loading="lazy">
+                        <img src="img/RellenoQuesoArequipe.webp" alt="Pan relleno de queso y arequipe" loading="lazy">
                         <h3>Pan relleno de queso y arequipe</h3>
                     </li>
                     <li class="carrusel-item">
-                        <img src="img/BolitasSaladas.jpg" alt="Bolitas saladas con ajonjolí" loading="lazy">
+                        <img src="img/BolitasSaladas.webp" alt="Bolitas saladas con ajonjolí" loading="lazy">
                         <h3>Bolitas saladas</h3>
                     </li>
                     <li class="carrusel-item">
-                        <img src="img/PandeMaiz.jpg" alt="Pan de maíz rebanado" loading="lazy">
+                        <img src="img/PandeMaiz.webp" alt="Pan de maíz rebanado" loading="lazy">
                         <h3>Pan de maíz</h3>
                     </li>
                     <li class="carrusel-item">
-                        <img src="img/peguetas.jpg" alt="Peguetas" loading="lazy">
+                        <img src="img/peguetas.webp" alt="Peguetas" loading="lazy">
                         <h3>Peguetas</h3>
                     </li>
                     <li class="carrusel-item">
-                        <img src="img/brownie.jpg" alt="Brownie" loading="lazy">
+                        <img src="img/brownie.webp" alt="Brownie" loading="lazy">
                         <h3>Brownie</h3>
                     </li>
                     <li class="carrusel-item">
-                        <img src="img/galleta_con_cubierta_de_chocolate.jpeg" alt="Galleta con cubierta de chocolate" loading="lazy">
+                        <img src="img/galleta_con_cubierta_de_chocolate.webp" alt="Galleta con cubierta de chocolate" loading="lazy">
                         <h3>Galleta con cubierta de chocolate</h3>
                     </li>
                     <li class="carrusel-item">
-                        <img src="img/galletas_chispas.jpeg" alt="Galletas con chispas de chocolate" loading="lazy">
+                        <img src="img/galletas_chispas.webp" alt="Galletas con chispas de chocolate" loading="lazy">
                         <h3>Galletas con chispas</h3>
                     </li>
                     <li class="carrusel-item">
-                        <img src="img/Turron_blanco.jpeg" alt="Turrón blanco" loading="lazy">
+                        <img src="img/Turron_blanco.webp" alt="Turrón blanco" loading="lazy">
                         <h3>Turrón blanco</h3>
                     </li>
                 </ul>
@@ -152,7 +148,7 @@
     <!-- Presentación corta. El texto largo está en Nosotros. -->
     <section class="seccion seccion-crema">
         <div class="contenedor dos-columnas">
-            <img class="foto-redonda" src="img/enrolladitos.png" alt="Pan y pasteles de La Emuna">
+            <img class="foto-redonda" src="img/enrolladitos.webp" alt="Pan y pasteles de La Emuna">
             <div>
                 <p class="etiqueta">Los preferidos</p>
                 <h2>Enrrolladitos</h2>

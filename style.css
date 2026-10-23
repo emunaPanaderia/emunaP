@@ -1,16 +1,14 @@
-/* La Emuna — estilos
-   Un solo archivo para las 4 páginas.
-   El menú va en barra burdeos y el texto en crema, como una marca.
-   Los colores siguen siendo los del logo: burdeos, dorado y crema.
-
-   Tipografía
-   - Fraunces: títulos
-   - Outfit: textos, menú y botones
-   Si no hay internet, el navegador usa Georgia y Segoe UI. */
+/* =========================================
+   La Emuna — style.css
+   Un solo archivo de estilos para las 4 paginas.
+   Colores del logo: marron, dorado y crema.
+   Fuentes: Fraunces (titulos) y Outfit (textos).
+   ========================================= */
 
 :root {
-    --crema: #fcfcb2;
-    --crema-oscura: #f4e4cc;
+    /* Crema cálido (sin verde/amarillo limón). Combina con marrón y dorado. */
+    --crema: #f7f0e4;
+    --crema-oscura: #efe4d2;
     --marron: #4a2218;
     --texto: #3f2c26;
     --texto-suave: #6e584f;
@@ -235,71 +233,50 @@ p {
 }
 
 /* ---------- Portada ----------
-   Cuatro fotos del mismo tono que se turnan con un fundido.
-   El fondo va desenfocado; los panes de adelante, nítidos. */
+   Video de fondo a pantalla completa.
+   Encima va un velo oscuro para que se lea el texto. */
 
 .hero {
     position: relative;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    /* Ocupa toda la pantalla; svh evita el salto de la barra del navegador en celular. */
-    height: 100vh;
-    height: 100svh;
-    min-height: 480px;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    text-align: center;
     overflow: hidden;
     background: var(--marron);
     border-bottom: 6px solid #540d0e;
     box-shadow: 0 10px 22px rgba(84, 13, 14, 0.5);
 }
 
-.hero-fotos,
-.hero-foto {
+.hero .bg-video {
     position: absolute;
-    inset: 0;
-}
-
-.hero-foto {
-    opacity: 0;
-    transition: opacity 1.4s ease;
-}
-
-.hero-foto.activa {
-    opacity: 1;
-}
-
-.hero-foto::before,
-.hero-foto::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: var(--foto);
-    background-position: center 42%;
-    background-size: cover;
-}
-
-/* Copia desenfocada encima: tapa la pared y se apaga al llegar a los panes. */
-.hero-foto::after {
-    inset: -24px;
-    filter: blur(13px);
-    transform: scale(1.05);
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 44%, rgba(0, 0, 0, 0.55) 62%, rgba(0, 0, 0, 0.2) 76%, transparent 90%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 44%, rgba(0, 0, 0, 0.55) 62%, rgba(0, 0, 0, 0.2) 76%, transparent 90%);
-}
-
-.hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(42, 16, 10, 0.48) 0%, rgba(42, 16, 10, 0.18) 42%, transparent 70%);
-}
-
-.hero-texto {
-    position: relative;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
     z-index: 1;
-    max-width: 46rem;
-    margin-inline: auto;
-    text-align: center;
-    color: var(--blanco);
+}
+
+.hero .video-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 2;
+}
+
+.hero .hero-content {
+    position: relative;
+    z-index: 3;
+    max-width: 800px;
+    padding: 0 20px;
 }
 
 .hero h1 {
@@ -308,25 +285,8 @@ p {
     font-style: italic;
     font-weight: 600;
     font-size: clamp(2.6rem, 8.5vw, 5.6rem);
-    /* Contorno blanco sólido. paint-order lo pinta por detrás para que no adelgace la letra. */
     -webkit-text-stroke: 5px var(--blanco);
     paint-order: stroke fill;
-    animation: alumbrar 7s ease-in-out infinite;
-}
-
-@keyframes alumbrar {
-    0%, 100% {
-        text-shadow:
-            0 0 2px #ffffff,
-            0 0 10px rgba(255, 255, 255, 0.9),
-            0 0 18px rgba(255, 255, 255, 0.55);
-    }
-    50% {
-        text-shadow:
-            0 0 3px #ffffff,
-            0 0 12px #ffffff,
-            0 0 22px rgba(255, 255, 255, 0.75);
-    }
 }
 
 .hero-frase {
@@ -335,86 +295,16 @@ p {
     font-family: var(--titulo);
     font-size: clamp(1.45rem, 2.6vw, 2rem);
     font-weight: 500;
-    letter-spacing: -0.02em;
-}
-
-/* ---------- Categorías ----------
-   Tarjetas en fila: foto arriba, texto y botón abajo. */
-
-.categorias {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.4rem;
-}
-
-/* Al pasar el ratón sube con "translate" para no chocar con la animación de entrada. */
-.cat {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    overflow: hidden;
-    border: 1px solid rgba(74, 34, 24, 0.12);
-    border-radius: 18px;
-    background: var(--blanco);
-    box-shadow: var(--sombra);
-    transition: translate 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.cat:hover {
-    translate: 0 -6px;
-    border-color: var(--dorado);
-    box-shadow: 0 20px 36px rgba(74, 34, 24, 0.14);
-}
-
-/* Hueco de la foto: siempre 4:3, sirva la imagen que sirva. */
-.cat img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    background: var(--crema);
-    transition: scale 0.5s ease;
-}
-
-.cat:hover img {
-    scale: 1.05;
-}
-
-.cat > div {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1.4rem;
-    border-top: 1px solid rgba(74, 34, 24, 0.08);
-    background: var(--blanco);
-}
-
-.cat h2 {
-    margin: 0 0 0.5rem;
-    font-size: 1.5rem;
-}
-
-.cat p {
-    flex: 1;
-    margin: 0 0 1.2rem;
-}
-
-/* En celular, una por fila. */
-@media (max-width: 680px) {
-    .categorias {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* ---------- Carrusel de productos ----------
-   Fila que se desliza de lado; las flechas y el giro automático van en script.js. */
+   Las flechas y el movimiento automático los maneja script.js. */
 
 .carrusel-marco {
     position: relative;
 }
 
-/* Capa de las flechas encima del carrusel. El padding en % se mide sobre el ancho,
-   así que (ancho de tarjeta / 2) deja las flechas a media altura de la foto cuadrada. */
+/* Flechas a los lados, a la altura de la mitad de la foto. */
 .carrusel-flechas {
     position: absolute;
     top: 0.4rem;
@@ -432,7 +322,6 @@ p {
     place-items: center;
     width: 48px;
     height: 48px;
-    /* Asoma hasta el borde del margen de .contenedor (1rem), sin salirse de la pantalla. */
     margin-inline: -1rem;
     border: 1px solid rgba(74, 34, 24, 0.15);
     border-radius: 50%;
@@ -485,12 +374,6 @@ p {
     background: var(--blanco);
     box-shadow: var(--sombra);
     transition: scale 0.25s ease, opacity 0.25s ease;
-}
-
-/* Mientras el carrusel se desliza, las tarjetas se achican un poco y vuelven. */
-.carrusel.moviendo .carrusel-item {
-    scale: 0.96;
-    opacity: 0.85;
 }
 
 .carrusel-item img {
@@ -673,35 +556,6 @@ p {
     filter: drop-shadow(0 14px 18px rgba(42, 16, 10, 0.25));
 }
 
-.tarjetas {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
-}
-
-.tarjeta {
-    padding: 1.5rem 1.4rem 1.3rem;
-    border-radius: 8px;
-    background: var(--blanco);
-    box-shadow: var(--sombra);
-}
-
-.tarjeta p,
-.datos p,
-.lista {
-    color: var(--texto-suave);
-}
-
-.lista {
-    margin: 0.2rem 0 0;
-    padding-left: 1.15rem;
-}
-
-.lista li + li {
-    margin-top: 0.4rem;
-}
-
-/* Título pegado al menú, en el mismo fondo de la página. */
 .pagina {
     padding-top: 5.6rem;
 }
@@ -715,7 +569,7 @@ p {
     scroll-margin-top: 0.5rem;
 }
 
-/* Nosotros: el panadero llega hasta el pie de página, así no se ve cortado. */
+/* En Nosotros el panadero llega hasta el pie. */
 .nosotros {
     padding-bottom: 0;
 }
@@ -772,8 +626,7 @@ p {
     gap: 1.4rem;
 }
 
-/* Ficha que se voltea: adelante la foto, atrás la descripción.
-   Las dos caras ocupan la misma celda, así la ficha toma el alto de la cara. */
+/* Ficha de producto: adelante la foto, atrás la descripción. */
 .ficha {
     perspective: 1000px;
     cursor: pointer;
@@ -795,7 +648,7 @@ p {
     transform: rotateY(180deg);
 }
 
-/* Solo con ratón: en el celular pasar el dedo no debe voltearla. */
+/* En computadora, al pasar el mouse también se voltea. */
 @media (hover: hover) {
     .ficha:hover .ficha-giro {
         transform: rotateY(180deg);
@@ -831,7 +684,7 @@ p {
     object-fit: cover;
 }
 
-/* Las fotos con fondo transparente se ven completas sobre crema. */
+/* Fotos PNG / con fondo transparente. */
 .ficha img.sin-fondo {
     padding: 1rem;
     object-fit: contain;
@@ -864,6 +717,10 @@ p {
     background: var(--crema);
 }
 
+.datos p {
+    color: var(--texto-suave);
+}
+
 .formulario label {
     display: block;
     margin-bottom: 0.35rem;
@@ -890,63 +747,7 @@ p {
     border-color: transparent;
 }
 
-/* Al bajar, cada pieza entra distinto. Sin la clase del script, se ven normal. */
-html.con-scroll .entra:not(.visto) {
-    opacity: 0;
-}
-
-html.con-scroll .visto.m-izq { animation: m-izq 0.8s ease both; }
-html.con-scroll .visto.m-der { animation: m-der 0.85s ease both; }
-html.con-scroll .visto.m-sube { animation: m-sube 0.9s ease both; }
-html.con-scroll .visto.m-baja { animation: m-baja 0.75s ease both; }
-html.con-scroll .visto.m-crece { animation: m-crece 0.7s ease both; }
-html.con-scroll .visto.m-gira { animation: m-gira 0.95s ease both; }
-html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
-
-@keyframes m-izq {
-    from { opacity: 0; transform: translateX(-64px); }
-    to { opacity: 1; transform: none; }
-}
-
-@keyframes m-der {
-    from { opacity: 0; transform: translateX(64px); }
-    to { opacity: 1; transform: none; }
-}
-
-@keyframes m-sube {
-    from { opacity: 0; transform: translateY(56px); }
-    to { opacity: 1; transform: none; }
-}
-
-@keyframes m-baja {
-    from { opacity: 0; transform: translateY(-48px); }
-    to { opacity: 1; transform: none; }
-}
-
-@keyframes m-crece {
-    from { opacity: 0; transform: scale(0.78); }
-    to { opacity: 1; transform: none; }
-}
-
-@keyframes m-gira {
-    from { opacity: 0; transform: rotate(-8deg) scale(0.9); }
-    to { opacity: 1; transform: none; }
-}
-
-@keyframes m-nace {
-    from { opacity: 0; filter: blur(12px); }
-    to { opacity: 1; filter: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .hero h1 { animation: none; }
-    .hero-foto { transition: none; }
-    html.con-scroll .entra:not(.visto) { opacity: 1; }
-    html.con-scroll .visto { animation: none; }
-}
-
-/* ---------- Pie ----------
-   Datos, iconos de redes y el mapa. */
+/* ---------- Pie de pagina ---------- */
 
 .pie {
     padding: 2.2rem 0;
@@ -1054,54 +855,6 @@ html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
     fill: #ffffff;
 }
 
-/* Contenedor principal de la portada */
-.hero {
-    position: relative;
-    width: 100%;
-    min-height: 100vh; /* O la altura que desees para el hero */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centra el contenido verticalmente */
-    align-items: center;     /* Centra el contenido horizontalmente */
-    text-align: center;
-    overflow: hidden;
-}
-
-/* Video ajustado al fondo */
-.hero .bg-video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-    z-index: 1;
-}
-
-/* Capa semitransparente para legibilidad */
-.hero .video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.45);
-    z-index: 2;
-}
-
-/* El bloque del contenido resalta al frente */
-.hero .hero-content {
-    position: relative;
-    z-index: 3;
-    max-width: 800px;
-    padding: 0 20px;
-}
-
-
-
 /* ---------- Pantalla pequeña ---------- */
 
 @media (max-width: 800px) {
@@ -1149,7 +902,6 @@ html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
     }
 
     .dos-columnas,
-    .tarjetas,
     .pie-grid {
         grid-template-columns: 1fr;
     }
@@ -1173,9 +925,6 @@ html.con-scroll .visto.m-nace { animation: m-nace 1s ease both; }
         font-size: clamp(2.8rem, 12vw, 4.2rem);
     }
 
-    .hero-texto {
-        padding-inline: 1rem;
-    }
 }
 
 /* En pantalla grande el menú se acerca al borde, con un margen. */
